@@ -1,0 +1,13 @@
+﻿@helper GetFontClass(string authenticationType)
+{
+    if (authenticationType == "Microsoft")
+    {
+        @("windows")
+    }
+    else
+    {
+        @authenticationType.ToLower()
+    }
+
+
+}
