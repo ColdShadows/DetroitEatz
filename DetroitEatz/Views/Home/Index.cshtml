@@ -1,0 +1,22 @@
+﻿@section scripts {
+    @Scripts.Render("~/bundles/app")
+}
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
+<div class="page-header">
+    <h2>
+        Restaurant
+    </h2>
+</div>
+
+<small><a href="#" data-bind="click: $parent.test">Details</a></small>
+<p data-bind="text: favoriteDetail">
+
+</p>
+<div id="panel">
+    <input id="address" type="text" value="New Delhi">
+    <input type="button" value="Search" onclick="test()">
+    <p id="product" />
+</div>
+<div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
+</div>
+<table class="table"></table>
