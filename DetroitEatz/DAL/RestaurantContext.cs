@@ -12,5 +12,6 @@ namespace DetroitEatz.DAL
     {
         //public DbSet<User> Users { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
     }
 }

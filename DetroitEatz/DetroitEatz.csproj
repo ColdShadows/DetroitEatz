@@ -190,6 +190,14 @@
     <Compile Include="Migrations\201508251329328_changedatatype.Designer.cs">
       <DependentUpon>201508251329328_changedatatype.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508251838147_Favorites.cs" />
+    <Compile Include="Migrations\201508251838147_Favorites.Designer.cs">
+      <DependentUpon>201508251838147_Favorites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201508251840051_Favorites1.cs" />
+    <Compile Include="Migrations\201508251840051_Favorites1.Designer.cs">
+      <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Favorite.cs" />
@@ -288,6 +296,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508251329328_changedatatype.resx">
       <DependentUpon>201508251329328_changedatatype.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508251838147_Favorites.resx">
+      <DependentUpon>201508251838147_Favorites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508251840051_Favorites1.resx">
+      <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

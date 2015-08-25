@@ -3,14 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 namespace DetroitEatz.Models
 {
-    class Favorite
+   public class Favorite
     {
-        int FavoriteID;
-        string UserID;
-        string PlaceID;
-        string RestaurantName;
+      // [Key]
+      // [Required]
+        public int FavoriteID {get;set;}
+        public string UserID { get; set; }
+        public string PlaceID { get; set; }
+        public string RestaurantName { get; set; }
+
+        public virtual ICollection<Restaurant> FavoriteRestaurants { get; set; }
     }
 }
