@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DetroitEats.Models
+namespace DetroitEatz.Models
 {
     class Favorite
     {

@@ -181,6 +181,10 @@
     <Compile Include="Migrations\201508241817587_Initial.Designer.cs">
       <DependentUpon>201508241817587_Initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508250202594_ReplaceDetroitEats.cs" />
+    <Compile Include="Migrations\201508250202594_ReplaceDetroitEats.Designer.cs">
+      <DependentUpon>201508250202594_ReplaceDetroitEats.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Favorite.cs" />
@@ -274,6 +278,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201508241817587_Initial.resx">
       <DependentUpon>201508241817587_Initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508250202594_ReplaceDetroitEats.resx">
+      <DependentUpon>201508250202594_ReplaceDetroitEats.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -8,8 +8,8 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
-using DetroitEats.DAL;
-using DetroitEats.Models;
+using DetroitEatz.DAL;
+using DetroitEatz.Models;
 
 namespace DetroitEatz.Controllers
 {
