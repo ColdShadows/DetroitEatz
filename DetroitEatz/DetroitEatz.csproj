@@ -198,6 +198,10 @@
     <Compile Include="Migrations\201508251840051_Favorites1.Designer.cs">
       <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201508252021561_PlaceID.cs" />
+    <Compile Include="Migrations\201508252021561_PlaceID.Designer.cs">
+      <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Favorite.cs" />
@@ -302,6 +306,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508251840051_Favorites1.resx">
       <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201508252021561_PlaceID.resx">
+      <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
