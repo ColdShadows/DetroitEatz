@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using Microsoft.AspNet.Identity;
+using DetroitEatz.Models;
 namespace DetroitEatz.Controllers
 {
     public class HomeController : Controller
@@ -12,9 +13,11 @@ namespace DetroitEatz.Controllers
 
         public ActionResult Index()
         {
+
+
             string userName;
             string userID;
-            ViewBag.Title = "test";
+            
             if (User.Identity.IsAuthenticated)
             {
                 userID = User.Identity.GetUserId();
@@ -24,6 +27,8 @@ namespace DetroitEatz.Controllers
             }
             return View();
         }
+
+
 
     }
 }
