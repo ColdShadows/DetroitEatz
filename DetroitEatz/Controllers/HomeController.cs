@@ -3,16 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-
-namespace DetroitEats.Controllers
+using System.Data.Entity;
+using Microsoft.AspNet.Identity;
+namespace DetroitEatz.Controllers
 {
     public class HomeController : Controller
     {
 
         public ActionResult Index()
         {
+            string userName;
+            string userID;
             ViewBag.Title = "test";
-
+            if (User.Identity.IsAuthenticated)
+            {
+                userID = User.Identity.GetUserId();
+                userName = HttpContext.User.Identity.Name;
+                ViewBag.userName = userName;
+                ViewBag.userID = userID;
+            }
             return View();
         }
 

@@ -5,14 +5,14 @@ namespace DetroitEatz.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<DetroitEats.DAL.RestaurantContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<DetroitEatz.DAL.RestaurantContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(DetroitEats.DAL.RestaurantContext context)
+        protected override void Seed(DetroitEatz.DAL.RestaurantContext context)
         {
             //  This method will be called after migrating to the latest version.
 
