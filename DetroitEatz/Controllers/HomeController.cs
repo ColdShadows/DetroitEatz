@@ -14,7 +14,20 @@ namespace DetroitEatz.Controllers
         public ActionResult Index()
         {
 
+            //Create new Favorite
+            Favorite newFav = new Favorite
+            {
 
+                UserID = User.Identity.GetUserName(),
+                PlaceID = "k",
+                RestaurantName = "k"
+
+            };
+
+            
+            
+            
+            
             string userName;
             string userID;
             
