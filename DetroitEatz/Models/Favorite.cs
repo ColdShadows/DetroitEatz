@@ -9,8 +9,8 @@ namespace DetroitEatz.Models
     class Favorite
     {
         int FavoriteID;
-        int userID;
-        string RestaurantID;
+        string UserID;
+        string PlaceID;
         string RestaurantName;
     }
 }

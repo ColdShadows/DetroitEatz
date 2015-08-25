@@ -10,7 +10,7 @@ namespace DetroitEatz.DAL
 {
     public class RestaurantContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        //public DbSet<User> Users { get; set; }
         public DbSet<Restaurant> Restaurants { get; set; }
     }
 }

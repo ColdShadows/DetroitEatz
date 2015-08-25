@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity;
 namespace DetroitEatz.Models
 {
     public class Restaurant
@@ -22,6 +24,10 @@ namespace DetroitEatz.Models
         string addressNumber;
         string state;
         string phoneNumber;
+        [Required]  
+        [Index(IsUnique=true)]
+        string PlaceID { get; set; }
+        
 
         public int RestaurantID { get; set; }
         public string Name { get { return name; } set { name = value; } }
@@ -40,7 +46,7 @@ namespace DetroitEatz.Models
 
 
 
-        public virtual ICollection<User> Users { get; set; }
+        
 
     }
 }
