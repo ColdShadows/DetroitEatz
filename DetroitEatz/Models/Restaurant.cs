@@ -24,9 +24,8 @@ namespace DetroitEatz.Models
         string addressNumber;
         string state;
         string phoneNumber;
-        [Required]  
-        [Index(IsUnique=true)]
-        string PlaceID { get; set; }
+        [Required]          
+        public string PlaceID { get; set; }
         
 
         public int RestaurantID { get; set; }

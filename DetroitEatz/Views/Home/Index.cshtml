@@ -1,4 +1,5 @@
-﻿@section scripts {
+﻿@model IEnumerable<DetroitEatz.Models.Restaurant>
+@section scripts {
     @Scripts.Render("~/bundles/app")
 }
 
@@ -26,3 +27,53 @@
 <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
 </div>
 <table class="table"></table>
+
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebSite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PriceLevel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.WebSite)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.State)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.ActionLink("Home", "Index", new { id = item.PlaceID }) 
+               
+            </td>
+        </tr>
+    }
+
+</table>
