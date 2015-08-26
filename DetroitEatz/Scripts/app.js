@@ -88,7 +88,7 @@ function createMarker(place) {
     });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize).done(callback).done(location.reload());
 
 
 var ViewModel = function () {
