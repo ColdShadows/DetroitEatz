@@ -178,29 +178,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201508241817587_Initial.cs" />
-    <Compile Include="Migrations\201508241817587_Initial.Designer.cs">
-      <DependentUpon>201508241817587_Initial.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508250202594_ReplaceDetroitEats.cs" />
-    <Compile Include="Migrations\201508250202594_ReplaceDetroitEats.Designer.cs">
-      <DependentUpon>201508250202594_ReplaceDetroitEats.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251329328_changedatatype.cs" />
-    <Compile Include="Migrations\201508251329328_changedatatype.Designer.cs">
-      <DependentUpon>201508251329328_changedatatype.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251838147_Favorites.cs" />
-    <Compile Include="Migrations\201508251838147_Favorites.Designer.cs">
-      <DependentUpon>201508251838147_Favorites.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508251840051_Favorites1.cs" />
-    <Compile Include="Migrations\201508251840051_Favorites1.Designer.cs">
-      <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201508252021561_PlaceID.cs" />
-    <Compile Include="Migrations\201508252021561_PlaceID.Designer.cs">
-      <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
+    <Compile Include="Migrations\201508261936312_fourth.cs" />
+    <Compile Include="Migrations\201508261936312_fourth.Designer.cs">
+      <DependentUpon>201508261936312_fourth.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -292,23 +272,8 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201508241817587_Initial.resx">
-      <DependentUpon>201508241817587_Initial.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508250202594_ReplaceDetroitEats.resx">
-      <DependentUpon>201508250202594_ReplaceDetroitEats.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251329328_changedatatype.resx">
-      <DependentUpon>201508251329328_changedatatype.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251838147_Favorites.resx">
-      <DependentUpon>201508251838147_Favorites.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508251840051_Favorites1.resx">
-      <DependentUpon>201508251840051_Favorites1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201508252021561_PlaceID.resx">
-      <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201508261936312_fourth.resx">
+      <DependentUpon>201508261936312_fourth.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

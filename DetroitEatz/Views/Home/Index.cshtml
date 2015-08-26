@@ -11,7 +11,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
 <div class="page-header">
     <h2>
-        Restaurant
+        DetroitEatz
     </h2>
 </div>
 
@@ -58,10 +58,35 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
+                @if (item.PriceLevel == "0")
+                {
+                    item.PriceLevel = "Free";
+                }
+                else if(item.PriceLevel == "1")
+                {
+                    item.PriceLevel = "Inexpensive";
+                }
+                else if (item.PriceLevel == "2")
+                {
+                    item.PriceLevel = "Moderate";
+                }
+                else if (item.PriceLevel == "3")
+                {
+                    item.PriceLevel = "Expensive";
+                }
+                else if (item.PriceLevel == "4")
+                {
+                    item.PriceLevel = "Very Expensive";
+                }
+                else
+                {
+                    item.PriceLevel = "N/A";
+                }
                 @Html.DisplayFor(modelItem => item.PriceLevel)
             </td>
+
             <td>
-                @Html.DisplayFor(modelItem => item.WebSite)
+                <a href=@item.WebSite>@item.WebSite</a>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.State)
