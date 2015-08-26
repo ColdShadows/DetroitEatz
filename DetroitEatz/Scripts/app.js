@@ -55,13 +55,15 @@ function callback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
-            id = i + 1;
-            foodPlace = {
-                RestaurantID: id,
+            //id = i + 1;
+            foodPlace = {              
+                PlaceID: results[i].id,
                 Name: results[i].name,
                 PriceLevel: results[i].price_level,
                 WebSite: results[i].website,
                 Rating: results[i].rating
+                
+                
             }
             ajaxHelper('/api/Restaurants/', 'POST', foodPlace).done(function (item) {
                 self.restaurants.push(item);
