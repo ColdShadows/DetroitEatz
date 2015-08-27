@@ -9,7 +9,7 @@
 </div>
 
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
-<div class="page-header">
+<div align="center" class="page-header">
     <h2>
         Restaurant
     </h2>
@@ -19,12 +19,12 @@
 <p data-bind="text: favoriteDetail">
 
 </p>
-<div id="panel">
+<div  id="panel">
     <input id="address" type="text" value="New Delhi">
     <input type="button" value="Search" onclick="test()">
     <p id="product" />
 </div>
-<div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
+<div id="map" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;" >
 </div>
 <table class="table"></table>
 
@@ -38,17 +38,19 @@
         </th>
         <th>
             @Html.DisplayNameFor(model => model.PriceLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
+        </th>            
         <th>
             @Html.DisplayNameFor(model => model.Rating)
         </th>
-        <th></th>
+        <th>
+            @Html.DisplayNameFor(model => model.PhoneNumber)            
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AddressNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebSite)
+        </th>   
     </tr>
 
     @foreach (var item in Model)
@@ -59,19 +61,21 @@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.PriceLevel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.WebSite)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
+            </td>            
             <td>
                 @Html.DisplayFor(modelItem => item.Rating)
             </td>
             <td>
-                @Html.ActionLink("Home", "Index", new { id = item.PlaceID }) 
-               
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AddressNumber )
+            </td>
+            <td>
+                @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+            </td>
+            <td a href="#">
+                @Html.DisplayFor(modelItem => item.WebSite)
             </td>
         </tr>
     }

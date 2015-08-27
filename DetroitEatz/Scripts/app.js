@@ -55,19 +55,8 @@ function callback(results, status) {
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
-            //id = i + 1;
-            foodPlace = {              
-                PlaceID: results[i].id,
-                Name: results[i].name,
-                PriceLevel: results[i].price_level,
-                WebSite: results[i].website,
-                Rating: results[i].rating
-                
-                
-            }
-            ajaxHelper('/api/Restaurants/', 'POST', foodPlace).done(function (item) {
-                self.restaurants.push(item);
-            });
+            
+           
         }
     }
 }
@@ -81,6 +70,20 @@ function createMarker(place) {
 
     var request = { reference: place.reference };
     service.getDetails(request, function (details, status) {
+
+        foodPlace = {
+            PlaceID: details.id,
+            Name: details.name,
+            PriceLevel: details.price_level,
+            WebSite: details.website,
+            Rating: details.rating,
+            AddressNumber: details.formatted_address,
+            PhoneNumber: details.formatted_phone_number,
+            
+
+        }
+        ajaxHelper('/api/Restaurants/', 'POST', foodPlace);
+
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level);
             infowindow.open(map, marker);
@@ -88,7 +91,7 @@ function createMarker(place) {
     });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize).done(callback).done(location.reload());
+google.maps.event.addDomListener(window, 'load', initialize);
 
 
 var ViewModel = function () {
