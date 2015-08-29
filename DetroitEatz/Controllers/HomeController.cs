@@ -46,22 +46,46 @@ namespace DetroitEatz.Controllers
             }
 
             //Creating Restaurant Tables
-
-           
-                //var restaurantList = new List<string>();
+                     
 
 
-                var restaurants =  from r in db.Restaurants
-                                   select r;
+                //var restaurants =  from r in db.Restaurants
+                //                   select r;
 
-                //restaurantList.AddRange(restaurants.Distinct().ToList().ToString());
+                
 
-                //ViewBag.Restaurants = 
-                return View(restaurants);
+
+            //Create List of Fake Favorites
+
+                var favorites = new List<Favorite>();
+                favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
+                favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
+                ViewBag.Favorites = favorites;
+
+                return View(/*restaurants*/);
            
 
 
             
+        }
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Index(List<Restaurant> restaurants)
+        {
+            List<Restaurant> validRestaurants = new List<Restaurant>();
+
+            foreach(Restaurant r in restaurants)
+            {
+                if (ModelState.IsValid)
+                {
+                    validRestaurants.Add(r);
+                }
+
+            }
+
+
+            return View(validRestaurants);
         }
 
 

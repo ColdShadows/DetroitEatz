@@ -15,69 +15,100 @@
     </h2>
 </div>
 
-<small><a href="#" data-bind="click: $parent.test">Details</a></small>
-<p data-bind="text: favoriteDetail">
 
-</p>
-<div  id="panel">
-    <input id="address" type="text" value="New Delhi">
-    <input type="button" value="Search" onclick="test()">
+<div id="panel">
+    <input style="border-color:black; color:white;background-color:blue" id="address" type="text" value="New Delhi">
+    <input style="border-color:black; color:white;background-color:blue" type="button" value="Search" onclick="test()">
     <p id="product" />
 </div>
-<div id="map" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;" >
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div align="left" class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>
+                    Restaurant Name
+                </th>
+                <th>
+                    Restaurant Address
+                </th>
+            </tr>
+            @foreach (var item in @ViewBag.Favorites)
+            {
+                <tr>
+                    <td>
+                        @item.RestaurantName
+                    </td>
+                    <td>
+                        @item.PlaceID
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+}
+
+
+
+
+<div id="map" class="col-md-8" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;">
 </div>
-<table class="table"></table>
 
-
-
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceLevel)
-        </th>            
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PhoneNumber)            
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AddressNumber)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </th>   
-    </tr>
-
-    @foreach (var item in Model)
-    {
+@if(Model != null)
+{ 
+<div class="col-md-8">
+    <table class="table">
         <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriceLevel)
-            </td>            
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PhoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AddressNumber )
-            </td>
-            <td>
-                @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
-            </td>
-            <td a href="#">
-                @Html.DisplayFor(modelItem => item.WebSite)
-            </td>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PriceLevel)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AddressNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebSite)
+            </th>
         </tr>
-    }
 
-</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PriceLevel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PhoneNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AddressNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+                    @*@Ajax.ActionLink("Add To Favorites")*@
+                </td>
+                <td a href="#">
+                    @Html.DisplayFor(modelItem => item.WebSite)
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>
+}

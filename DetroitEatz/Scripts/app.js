@@ -3,6 +3,7 @@ var id;
 var map;
 var service;
 var infowindow;
+var listOfRestaurants = new Array();
 var restaurantsUri = '/api/Restaurants/';
 var food = {
     Name: 'Ben',
@@ -58,6 +59,7 @@ function callback(results, status) {
             
            
         }
+        ajaxHelper('/Home/Index', 'POST', listOfRestaurants);
     }
 }
 
@@ -72,7 +74,7 @@ function createMarker(place) {
     service.getDetails(request, function (details, status) {
 
         foodPlace = {
-            PlaceID: details.id,
+            PlaceID: details.place_id,
             Name: details.name,
             PriceLevel: details.price_level,
             WebSite: details.website,
@@ -82,7 +84,8 @@ function createMarker(place) {
             
 
         }
-        ajaxHelper('/api/Restaurants/', 'POST', foodPlace);
+        listOfRestaurants.push(foodPlace);
+        //ajaxHelper('/api/Restaurants/', 'POST', foodPlace);
 
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level);
