@@ -59,7 +59,17 @@ function callback(results, status) {
             
            
         }
-        ajaxHelper('/Home/Index', 'POST', listOfRestaurants);
+        //ViewBag.ListOfRestaurants = listOfRestaurants;
+        $.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
+        $.ajax(
+            {
+                url: URL.Action("Home", "Index"),
+                data: listOfRestaurants,
+                type: 'POST',
+                traditional: true,
+                success: alert("yay")
+            }).fail(alert("oops"));
+        //ajaxHelper('/Home/Index', 'POST', listOfRestaurants);
     }
 }
 

@@ -45,14 +45,21 @@ namespace DetroitEatz.Controllers
                 ViewBag.userID = userID;
             }
 
-            //Creating Restaurant Tables
-                     
+           //Test of Viewbag
+            List<Restaurant> validRestaurants = new List<Restaurant>();
+            if (ViewBag.ListOfRestaurants != null)
+            {
+                foreach (Restaurant r in (new List<Restaurant>(ViewBag.ListOfRestaurants)))
+                {
+                    if (ModelState.IsValid)
+                    {
+                        validRestaurants.Add(r);
+                    }
 
 
-                //var restaurants =  from r in db.Restaurants
-                //                   select r;
-
-                
+                }
+                ViewBag.ValidRestaurants = validRestaurants;
+            }  
 
 
             //Create List of Fake Favorites
