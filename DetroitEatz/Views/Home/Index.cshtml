@@ -1,4 +1,5 @@
-﻿@model IEnumerable<DetroitEatz.Models.Restaurant>
+﻿@using DetroitEatz.Models;
+@model IEnumerable<DetroitEatz.Models.Restaurant>
 @section scripts {
     @Scripts.Render("~/bundles/app")
 }
@@ -34,19 +35,34 @@
                     Restaurant Address
                 </th>
             </tr>
-            @foreach (var item in @ViewBag.Favorites)
+            @if (ViewBag.Favorites != null)
             {
-                <tr>
-                    <td>
-                        @item.RestaurantName
-                    </td>
-                    <td>
-                        @item.PlaceID
-                    </td>
-                </tr>
-            }
+                List<Favorite> favList = new List<Favorite>();
+                foreach (Favorite f in ViewBag.Favorites)
+                {
 
+                    favList.Add(f);
+                }
+                for (int i = 0; i < favList.Count; i++)
+                {
+
+
+                    <tr>
+                        <td>Row: @i</td>
+                        <td>
+                            @favList[i].RestaurantName
+                        </td>
+                        <td>
+                            @favList[i].PlaceID
+                        </td>
+                    </tr>
+
+                }
+            }
         </table>
+
+
+
     </div>
 }
 
@@ -65,8 +81,10 @@
         }
     }
 }*@
-@if(Model != null)
+@if (Model != null)
 { 
+    int tblrow = 0;
+
 <div class="col-md-8">
     <table class="table">
         <tr>
@@ -92,7 +110,8 @@
 
         @foreach (var item in Model)
         {
-            <tr>
+            <tr id="@tblrow">
+                <td>Table Row: tblrow</td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
@@ -116,6 +135,8 @@
                     @Html.DisplayFor(modelItem => item.WebSite)
                 </td>
             </tr>
+            tblrow++;
+        
         }
 
     </table>
