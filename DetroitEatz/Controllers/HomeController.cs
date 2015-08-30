@@ -13,7 +13,7 @@ namespace DetroitEatz.Controllers
     {
         RestaurantContext db = new RestaurantContext();
         RestaurantContext db2 = new RestaurantContext();
-        public ActionResult Index()
+        public ActionResult Index(/*List<Restaurant>? unvalidatedRestaurants*/)
         {
             //Use DBContext
            
@@ -46,20 +46,37 @@ namespace DetroitEatz.Controllers
             }
 
            //Test of Viewbag
-            List<Restaurant> validRestaurants = new List<Restaurant>();
-            if (ViewBag.ListOfRestaurants != null)
-            {
-                foreach (Restaurant r in (new List<Restaurant>(ViewBag.ListOfRestaurants)))
-                {
-                    if (ModelState.IsValid)
-                    {
-                        validRestaurants.Add(r);
-                    }
+            //List<Restaurant> validRestaurants = new List<Restaurant>();
+            //if (ViewBag.ListOfRestaurants != null)
+            //{
+            //    foreach (Restaurant r in (new List<Restaurant>(ViewBag.ListOfRestaurants)))
+            //    {
+            //        if (ModelState.IsValid)
+            //        {
+            //            validRestaurants.Add(r);
+            //        }
 
 
-                }
-                ViewBag.ValidRestaurants = validRestaurants;
-            }  
+            //    }
+            //    ViewBag.ValidRestaurants = validRestaurants;
+            //}  
+
+            //Test of Nullable Parameter
+            //List<Restaurant> validRestaurants = new List<Restaurant>();
+
+            //foreach (Restaurant r in unvalidatedRestaurants)
+            //{
+            //    if (ModelState.IsValid)
+            //    {
+            //        validRestaurants.Add(r);
+            //    }
+
+            //}
+
+
+
+
+
 
 
             //Create List of Fake Favorites
@@ -69,7 +86,7 @@ namespace DetroitEatz.Controllers
                 favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
                 ViewBag.Favorites = favorites;
 
-                return View(/*restaurants*/);
+                return View(/*validRestaurants*/);
            
 
 
