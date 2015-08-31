@@ -17,9 +17,9 @@ namespace DetroitEatz.Controllers
         {
             //Use DBContext
             List<string> Foods = new List<string>() { "All", "African", "All You Can Eat", "Bangladeshi", "barbecue", "breakfast", "brunch", 
-                "buffet", "burgers", "Cantonese", "Carribean", "Chicken", "Chinese", "Coney Island", 
-                "Creole", "fish", "gyros", "Indian", "Italian", "Japanese", "Korean", "Lebanese", 
-                "Mediterranean", "Mexican", "Morroccan", "Nigerian", "organic", "Pakistani", "salad", "seafood", 
+                "buffet", "burgers", "Cantonese", "Carribean", "chicken", "Chinese", "Coney Island", 
+                "Creole", "fish", "gyros", "health", "Indian", "Italian", "Japanese", "Korean", "Lebanese", 
+                "Mediterranean", "Mexican", "Morroccan", "Nigerian", "organic", "Pakistani", "pizza", "salad", "seafood", 
                 "shwarmas", "Soul", "soup", "steak", "subs", "sushi", "tacos",
                 "Thai", "Vietnamese"};
             ViewBag.foodChoice = new SelectList(Foods);
