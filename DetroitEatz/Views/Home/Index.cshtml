@@ -7,29 +7,54 @@
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
 </div>
+ 
+<link rel="stylesheet" href="~/Content/map.css" />
+@*Scripts added to use for current location button*@
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
 <div class="page-header">
     <h2>
-        Restaurant
+        DetroitEatz
     </h2>
 </div>
 
-<small><a href="#" data-bind="click: $parent.test">Details</a></small>
-<p data-bind="text: favoriteDetail">
+@*<small><a href="#" data-bind="click: $parent.test">Details</a></small>
+    <p data-bind="text: favoriteDetail"></p>*@
 
-</p>
-<div id="panel">
-    <input id="address" type="text" value="New Delhi">
-    <input type="button" value="Search" onclick="test()">
-    <p id="product" />
+<input id="pac-input" class="controls" type="text"
+       placeholder="Enter a location">
+<div id="type-selector" class="controls">
+    <input type="radio" name="type" id="changetype-all" checked="checked">
+    <label for="changetype-all">All</label>
+
+    <input type="radio" name="type" id="changetype-restaurant">
+    <label for="changetype-restaurant">Restaurants</label>
+
+    <input type="radio" name="type" id="changetype-address">
+    <label for="changetype-address">Addresses</label>
+
+    <input type="radio" name="type" id="changetype-geocode">
+    <label for="changetype-geocode">Geocodes</label>
 </div>
-<div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
-</div>
-<table class="table"></table>
+<div id="map"></div>
 
+<div class="btn btn-success" id="toggle_traffic">Traffic</div>
+<div class="btn btn-danger" id="toggle_transit">Transit</div>
+<div class="btn btn-primary" id="toggle_bike">Biking</div>
 
-
+@*<div id="panel">        
+        <input id="address" type="text" value="">
+        <input type="button" value="Search" onclick="test()">
+        <p id="product" />
+    </div>
+    <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
+    </div>*@
 
 <table class="table">
     <tr>
