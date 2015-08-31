@@ -13,11 +13,18 @@ namespace DetroitEatz.Controllers
     {
         RestaurantContext db = new RestaurantContext();
         RestaurantContext db2 = new RestaurantContext();
-        public ActionResult Index()
+        public ActionResult Index(string foodChoice, string searchString)
         {
             //Use DBContext
-           
-            
+            List<string> Foods = new List<string>() { "All", "African", "All You Can Eat", "Bangladeshi", "barbecue", "breakfast", "brunch", 
+                "buffet", "burgers", "Cantonese", "Carribean", "Chicken", "Chinese", "Coney Island", 
+                "Creole", "fish", "gyros", "Indian", "Italian", "Japanese", "Korean", "Lebanese", 
+                "Mediterranean", "Mexican", "Morroccan", "Nigerian", "organic", "Pakistani", "salad", "seafood", 
+                "shwarmas", "Soul", "soup", "steak", "subs", "sushi", "tacos",
+                "Thai", "Vietnamese"};
+            ViewBag.foodChoice = new SelectList(Foods);
+            ViewBag.foodValue = foodChoice;
+            ViewBag.location = searchString;
             //Create new Favorite
                 Favorite newFav = new Favorite
                 {
@@ -54,14 +61,12 @@ namespace DetroitEatz.Controllers
                 var restaurants =  from r in db.Restaurants
                                    select r;
 
+                restaurants = restaurants.OrderBy(s => s.PriceLevel);
                 //restaurantList.AddRange(restaurants.Distinct().ToList().ToString());
 
                 //ViewBag.Restaurants = 
-                return View(restaurants);
-           
-
-
-            
+                return View(restaurants.ToList());
+          
         }
 
 

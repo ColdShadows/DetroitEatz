@@ -43,9 +43,5 @@ namespace DetroitEatz.Models
         public string State { get { return state; } set { state = value; } }
         public string PhoneNumber { get { return phoneNumber; } set { phoneNumber = value; } }
 
-
-
-        
-
     }
 }

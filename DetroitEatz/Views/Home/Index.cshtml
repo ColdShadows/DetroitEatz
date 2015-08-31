@@ -1,11 +1,152 @@
 ﻿@model IEnumerable<DetroitEatz.Models.Restaurant>
 @section scripts {
-    @Scripts.Render("~/bundles/app")
+    @if (ViewBag.location != null)
+    {
+        <script type="text/javascript">
+    var foodPlace;
+    var id;
+    var map;
+    var service;
+    var infowindow;
+    var types;
+    var radius;
+    var restaurantsUri = '/api/Restaurants';
+    var choice = 'restaurant';
+    /*
+    $(document).ready(function () {
+       // alert('Ouch');
+        ajaxHelper(restaurantsUri, 'POST', food);
+        ajaxHelper(restaurantsUri, 'GET');
+        alert('hyt');
+        });
+    */
+
+    function ajaxHelper(uri, method, data) {
+        //self.error(''); // Clear error message
+        return $.ajax({
+            type: method,
+            url: uri, dataType: 'json',
+            contentType: 'application/json',
+            data: data ? JSON.stringify(data) : null
+        }).fail(function (jqXHR, textStatus, errorThrown) {
+            //self.error(errorThrown);
+
+            alert(method);
+        });
+    }
+
+    function initialize() {
+        var detroit = new google.maps.LatLng(42.331427, -83.0457538);
+
+        map = new google.maps.Map(document.getElementById('map'), {
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            center: detroit,
+            zoom: 15
+        });
+        if(@ViewBag.foodValue != 'All'){
+            choice = '@ViewBag.foodValue';
+                }
+                var request = {
+                    location: detroit,
+                    //location: ViewBag.location,
+                    radius: 2000,
+                    types: [choice]
+                };
+                infowindow = new google.maps.InfoWindow();
+                service = new google.maps.places.PlacesService(map);
+                service.search(request, callback);
+            }
+
+            function callback(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                        //id = i + 1;
+                        /*
+                        foodPlace = {
+                            PlaceID: results[i].id,
+                            Name: results[i].name,
+                            PriceLevel: results[i].price_level,
+                            WebSite: results[i].website,
+                            Rating: results[i].rating
+                        }
+                        ajaxHelper('/api/Restaurants/', 'POST', foodPlace).done(function (item) {
+                            self.restaurants.push(item);
+                        });
+                        */
+                    }
+                }
+            }
+
+            function createMarker(place) {
+
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+
+                var request = { reference: place.reference };
+                service.getDetails(request, function (details, status) {
+                    foodPlace = {
+                        PlaceID: details.id,
+                        Name: details.name,
+                        PriceLevel: details.price_level,
+                        WebSite: details.website,
+                        Rating: details.rating
+                    };
+
+                    ajaxHelper('/api/Restaurants/', 'POST', foodPlace);//.done(function (item) {
+                    //self.restaurants.push(item);
+                    //});
+
+                    google.maps.event.addListener(marker, 'click', function () {
+                        infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level + "<br />" + details.opening_hours.periods[1].open.time);
+                        infowindow.open(map, marker);
+                    });
+                });
+            }
+
+            //google.maps.event.addDomListener(window, 'load', initialize);
+            $(function () {
+                //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
+                $('<td>', { text: 'Hello World' }).appendTo($('table'));
+                $('<td>', { text: 'Hello World' }).appendTo($('table'));
+                //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
+                $('<td>', { text: 'Hello World' }).appendTo($('table'));
+                $('<td>', { text: 'Hello World' }).appendTo($('table'));
+                $('<tr>', { text: 'Hello World' }).appendTo($('table'));
+                $('<td>', { text: '@ViewBag.location' }).appendTo($('table'));
+
+
+            });
+            $(function () {
+                //Send an AJAX request
+                $.getJSON(restaurantsUri)
+                    .done(function (data) {
+                        //On success, 'data' contains a list of products.
+                        $.each(data, function (key, item) {
+                            //Add a list item for the product.
+                            $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+                        });
+                    });
+            });
+
+            function formatItem(item) {
+                return item.Name + ': ' + item.PriceLevel;
+            }
+        </script>
+    }
+   
+    
+    @*@Scripts.Render("~/bundles/app")*@  
 }
 
 <div>
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
+    <p>@ViewBag.foodValue</p>
+    <p>@ViewBag.location</p>
+    
 </div>
 
 <script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
@@ -13,92 +154,101 @@
     <h2>
         DetroitEatz
     </h2>
-</div>
-
-<small><a href="#" data-bind="click: $parent.test">Details</a></small>
-<p data-bind="text: favoriteDetail">
-
-</p>
-<div id="panel">
-    <input id="address" type="text" value="New Delhi">
-    <input type="button" value="Search" onclick="test()">
-    <p id="product" />
-</div>
-<div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
-</div>
-<table class="table"></table>
-
-
-
-
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th></th>
-    </tr>
-
-    @foreach (var item in Model)
+    @using (Html.BeginForm("Index", "Home"))
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @if (item.PriceLevel == "0")
-                {
-                    item.PriceLevel = "Free";
-                }
-                else if(item.PriceLevel == "1")
-                {
-                    item.PriceLevel = "Inexpensive";
-                }
-                else if (item.PriceLevel == "2")
-                {
-                    item.PriceLevel = "Moderate";
-                }
-                else if (item.PriceLevel == "3")
-                {
-                    item.PriceLevel = "Expensive";
-                }
-                else if (item.PriceLevel == "4")
-                {
-                    item.PriceLevel = "Very Expensive";
-                }
-                else
-                {
-                    item.PriceLevel = "N/A";
-                }
-                @Html.DisplayFor(modelItem => item.PriceLevel)
-            </td>
-
-            <td>
-                <a href=@item.WebSite>@item.WebSite</a>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.ActionLink("Home", "Index", new { id = item.PlaceID }) 
-               
-            </td>
-        </tr>
+        <p>
+            Food Choice: @Html.DropDownList("foodChoice")
+            Your Location: @Html.TextBox("searchString")
+            <input type="submit" value="Find" />
+       </p>
     }
+</div>
+<div>
+    Title: <span id="test"></span>
+</div>
+<div>
+    <ul id="products" />
+    </div>
+    <div id="panel">
+        <input id="address" type="text" value="New Delhi">
+        <input type="button" value="Search" onclick="test()">
+        <p id="product" />
+    </div>
+    <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
+    </div>
+    <div>
+    @*<table id="eats">*@ 
+    <table class="table">
+        <tr>
+            <th>
 
-</table>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.ActionLink("Price Level", "Index")
+                @*@Html.DisplayNameFor(model => model.PriceLevel)*@
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.WebSite)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.State)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @if (item.PriceLevel == "0")
+                    {
+                        item.PriceLevel = "Free";
+                    }
+                    else if (item.PriceLevel == "1")
+                    {
+                        item.PriceLevel = "Inexpensive";
+                    }
+                    else if (item.PriceLevel == "2")
+                    {
+                        item.PriceLevel = "Moderate";
+                    }
+                    else if (item.PriceLevel == "3")
+                    {
+                        item.PriceLevel = "Expensive";
+                    }
+                    else if (item.PriceLevel == "4")
+                    {
+                        item.PriceLevel = "Very Expensive";
+                    }
+                    else
+                    {
+                        item.PriceLevel = "N/A";
+                    }
+                    @Html.DisplayFor(modelItem => item.PriceLevel)
+                </td>
+
+                <td>
+                    <a href=@item.WebSite>@item.WebSite</a>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.State)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+
+                </td>
+            </tr>
+        }
+
+    </table>
+</div>

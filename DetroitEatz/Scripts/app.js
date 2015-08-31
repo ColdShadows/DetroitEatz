@@ -1,4 +1,5 @@
-﻿var ViewModel = function () {
+﻿/*
+var ViewModel = function () {
 
     var self = this;
     self.users = ko.observableArray();
@@ -12,18 +13,16 @@
                 });
             }
             */
+
+
 var foodPlace;
 var id;
 var map;
 var service;
 var infowindow;
+var types;
+var radius;
 var restaurantsUri = '/api/Restaurants/';
-var food = {
-    Name: 'Ben',
-    PriceLevel: '3',
-    WebSite: 'http://google.com',
-    Rating: '2'
-};
 
 /*
 $(document).ready(function () {
@@ -33,6 +32,7 @@ $(document).ready(function () {
     alert('hyt');
     });
 */
+
 function ajaxHelper(uri, method, data) {
     //self.error(''); // Clear error message
     return $.ajax({
@@ -42,7 +42,8 @@ function ajaxHelper(uri, method, data) {
         data: data ? JSON.stringify(data) : null
     }).fail(function (jqXHR, textStatus, errorThrown) {
         //self.error(errorThrown);
-        alert('Error');
+       
+        alert(method);
     });
 }
 
@@ -57,8 +58,10 @@ function initialize() {
 
     var request = {
         location: detroit,
-        radius: 500,
-        types: ['restaurant']
+        radius: 2000,
+        //types: ['restaurant']
+        //types: '@Encoder.JavaScriptEncode(ViewBag.foodChoice, false)'
+        //types: '@ViewBag.foodChoice'
     };
     infowindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
@@ -66,7 +69,7 @@ function initialize() {
 }
 
 function callback(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
             //id = i + 1;
@@ -102,24 +105,47 @@ function createMarker(place) {
             WebSite: details.website,
             Rating: details.rating
         };
-
+        
         ajaxHelper('/api/Restaurants/', 'POST', foodPlace);//.done(function (item) {
-            //self.restaurants.push(item);
+        //self.restaurants.push(item);
         //});
 
         google.maps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level);
+            infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level + "<br />" + details.opening_hours.periods[1].open.time);
             infowindow.open(map, marker);
-            });
         });
-    
-    
+    });
 }
 
-google.maps.event.addDomListener(window, 'load', initialize);
+//google.maps.event.addDomListener(window, 'load', initialize);
+$(function () {
+    //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
+    $('<td>', { text: 'Hello World' }).appendTo($('table'));
+    $('<td>', { text: 'Hello World' }).appendTo($('table'));
+    //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
+    $('<td>', { text: 'Hello World' }).appendTo($('table'));
+    $('<td>', { text: 'Hello World' }).appendTo($('table'));
+    $('<tr>', { text: 'Hello World' }).appendTo($('table'));
+    $('<td>', { text: placeholder}).appendTo($('table'));
+   
+ 
+});
+$(document).ready(function () {
+     //Send an AJAX request       
+    $.getJSON(restaurantsUri)
+        .done(function (data) {             
+             //On success, 'data' contains a list of products.             
+            $.each(data, function (key, item) {               
+                 //Add a list item for the product.               
+                $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+            });
+        });
+});
 
-
-
-};
-ko.applyBindings(new ViewModel());
+function formatItem(item) {
+    return item.Name + ': ' + item.PriceLevel;
+}
+ 
+//};
+    //ko.applyBindings(new ViewModel());
 

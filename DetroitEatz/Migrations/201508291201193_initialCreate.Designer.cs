@@ -7,13 +7,13 @@ namespace DetroitEatz.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class fourth : IMigrationMetadata
+    public sealed partial class initialCreate : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(fourth));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(initialCreate));
         
         string IMigrationMetadata.Id
         {
-            get { return "201508261936312_fourth"; }
+            get { return "201508291201193_initialCreate"; }
         }
         
         string IMigrationMetadata.Source

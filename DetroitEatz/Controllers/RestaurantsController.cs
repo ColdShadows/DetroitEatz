@@ -20,6 +20,9 @@ namespace DetroitEatz.Controllers
         // GET: api/Restaurants
         public IQueryable<Restaurant> GetRestaurants()
         {
+            //var restaurants = from r in db.Restaurants
+           //                   select r;
+           // return restaurants;
             return db.Restaurants;
         }
 
