@@ -51,8 +51,11 @@ function initialize() {
     infowindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
     
-    var promise = new Promise(function (resolve, reject) { service.search(request, callback); });
-    promise.then(returnList());
+    var promise = new Promise.resolve();
+    service.search(request, promise.then(callback).then(returnList))
+
+    //var promise = new Promise(function (resolve, reject) { service.search(request, callback); });
+    //promise.then(returnList());
 }
 
 function returnList()
