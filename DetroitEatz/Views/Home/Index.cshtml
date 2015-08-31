@@ -149,7 +149,7 @@
     
 </div>
 
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>
+
 <div class="page-header">
     <h2>
         DetroitEatz
@@ -163,6 +163,7 @@
        </p>
     }
 </div>
+<<<<<<< HEAD
 <div>
     Title: <span id="test"></span>
 </div>
@@ -171,35 +172,37 @@
     </div>
     <div id="panel">
         <input id="address" type="text" value="New Delhi">
-        <input type="button" value="Search" onclick="test()">
-        <p id="product" />
-    </div>
-    <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
-    </div>
-    <div>
-    @*<table id="eats">*@ 
-    <table class="table">
-        <tr>
-            <th>
+=======
 
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.ActionLink("Price Level", "Index")
-                @*@Html.DisplayNameFor(model => model.PriceLevel)*@
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.WebSite)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.State)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rating)
-            </th>
-            <th></th>
-        </tr>
+@*<small><a href="#" data-bind="click: $parent.test">Details</a></small>
+    <p data-bind="text: favoriteDetail"></p>*@
 
+
+<div id="map"></div>
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PriceLevel)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.WebSite)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.State)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th></th>
+    </tr>
+
+   
         @foreach (var item in Model)
         {
             <tr>

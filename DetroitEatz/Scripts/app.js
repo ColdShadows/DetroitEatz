@@ -24,6 +24,7 @@ var types;
 var radius;
 var restaurantsUri = '/api/Restaurants/';
 
+
 /*
 $(document).ready(function () {
    // alert('Ouch');
@@ -48,7 +49,7 @@ function ajaxHelper(uri, method, data) {
 }
 
 function initialize() {
-    var detroit = new google.maps.LatLng(42.331427, -83.0457538);
+    var detroit = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
 
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
@@ -113,11 +114,8 @@ function createMarker(place) {
         google.maps.event.addListener(marker, 'click', function () {
             infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level + "<br />" + details.opening_hours.periods[1].open.time);
             infowindow.open(map, marker);
-        });
-    });
-}
 
-//google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
 $(function () {
     //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
     $('<td>', { text: 'Hello World' }).appendTo($('table'));
@@ -126,9 +124,7 @@ $(function () {
     $('<td>', { text: 'Hello World' }).appendTo($('table'));
     $('<td>', { text: 'Hello World' }).appendTo($('table'));
     $('<tr>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: placeholder}).appendTo($('table'));
-   
- 
+    $('<td>', { text: placeholder}).appendTo($('table')); 
 });
 $(document).ready(function () {
      //Send an AJAX request       
@@ -148,4 +144,3 @@ function formatItem(item) {
  
 //};
     //ko.applyBindings(new ViewModel());
-
