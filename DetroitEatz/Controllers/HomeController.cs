@@ -112,7 +112,17 @@ namespace DetroitEatz.Controllers
             return View(validRestaurants);
         }
 
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddFavorite(List<Restaurant> restaurants)
+        {
 
+            //db.Favorites.Add();
+
+            return RedirectToAction("Index");
+
+        }
 
     }
 }

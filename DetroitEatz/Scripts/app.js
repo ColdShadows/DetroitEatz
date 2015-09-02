@@ -11,6 +11,7 @@ var food = {
     WebSite: 'http://google.com',
     Rating: '2'
 };
+var restaurantCount;
 
 /*
 $(document).ready(function () {
@@ -51,36 +52,50 @@ function initialize() {
     infowindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
     
-    var promise = new Promise.resolve();
-    service.search(request, promise.then(callback).then(returnList))
+    //var promise = new Promise.resolve();
+    //service.search(request, promise.then(callback).then(returnList))
+    //service.search(request, callback)
+    var promise = new Promise(function (resolve, reject) {
+        resolve( service.search(request, callback));            
 
-    //var promise = new Promise(function (resolve, reject) { service.search(request, callback); });
-    //promise.then(returnList());
+    });
+   
+   promise.then(returnList, alert("fail"));
+   
 }
 
 function returnList()
 {
- $.ajax(
-{
-    url: '/Home/Index',
-    data: listOfRestaurants,
-    type: 'POST',
-    traditional: true,
-    success: alert("yay")
-}).fail(alert("oops"));
+    
+    //console.log(listOfRestaurants);
+   // if (restaurantCount == listOfRestaurants.length) {
+        $.ajax(
+       {
+           url: '/Home/Index',
+           data: listOfRestaurants,
+           async: false,
+           type: 'POST',
+           traditional: true,
+           success: alert("yay")
+       }).fail(alert("oops"));
+   // $.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
 }
 
 function callback(results, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-        for(var i = 0; i < results.length; i++) {
+        for (var i = 0; i < results.length; i++) {
+            restaurantCount = results.length;
             createMarker(results[i]);           
            
         }
+        alert("stuff");
         //ViewBag.ListOfRestaurants = listOfRestaurants;
         //$.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
-        
+        $.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
         //ajaxHelper('/Home/Index', 'POST', listOfRestaurants);
     }
+    return listOfRestaurants;
+    
 }
 
 function createMarker(place) {

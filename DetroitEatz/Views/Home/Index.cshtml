@@ -1,5 +1,6 @@
 ﻿@using DetroitEatz.Models;
 @using DetroitEatz.DAL;
+@using Microsoft.AspNet.Identity;
 @model IEnumerable<DetroitEatz.Models.Restaurant>
 @section scripts {
     @Scripts.Render("~/bundles/app")
@@ -68,66 +69,74 @@
 }
 @{
     List<Restaurant> tempList = new List<Restaurant>();
-   Restaurant r1 = new Restaurant();
-   r1.AddressNumber = "adr1";
-   r1.PlaceID="plc1";
-   r1.Name = "r1";
-   
-   Restaurant r2 = new Restaurant();
-   r2.AddressNumber = "adr2";
-   r2.PlaceID = "plc2";
-   r2.Name = "r2";
-   
-   Restaurant r3 = new Restaurant();
-   r3.AddressNumber = "adr3";
-   r3.PlaceID = "plc3";
-   r3.Name = "r3";
-   
-   tempList.Add(r1);
-   tempList.Add(r2);
-   tempList.Add(r3);
+    Restaurant r1 = new Restaurant();
+    r1.AddressNumber = "adr1";
+    r1.PlaceID = "plc1";
+    r1.Name = "r1";
+
+    Restaurant r2 = new Restaurant();
+    r2.AddressNumber = "adr2";
+    r2.PlaceID = "plc2";
+    r2.Name = "r2";
+
+    Restaurant r3 = new Restaurant();
+    r3.AddressNumber = "adr3";
+    r3.PlaceID = "plc3";
+    r3.Name = "r3";
+
+    tempList.Add(r1);
+    tempList.Add(r2);
+    tempList.Add(r3);
 }
+
+
 <table class="table">
-    @for (int i = 0; i < tempList.Count; i++)
+    @{int row = 0;}
+    @for (row = (tempList.Count - 1); row >= 0; row--)
     {
 
         <tr>
             <td>
-                Row: @i
+                Row: @row
             </td>
             <td>
-                @tempList[i].AddressNumber
+                @tempList[row].AddressNumber
             </td>
             <td>
-                @tempList[i].PlaceID
+                @tempList[row].PlaceID
             </td>
             <td>
-                <button id="@i" onclick="addToFav('@i')" class="btn btn-success">Add To Favorites</button>
+                <button id="@row" onclick="addToFav('@row')" class="btn btn-success">Add To Favorites</button>
             </td>
         </tr>
-
-
-
     }
+    @{row = 0;}
+
+
 </table>
 
 
 
-<script>
+<script type="text/javascript">
 
-    function addToFav(num)
-    {
-        var nm;
-        
-        @{
+    function addToFav(num) {
+
+
+
+        $(document).ready(function () {
+            @{
             RestaurantContext db = new RestaurantContext();
 
             Favorite fav = new Favorite();
-           // fav.RestaurantName = tempList[]
-            
-           // db.Favorites.Add();
-            
-         }
+            fav.RestaurantName = tempList[row].Name;
+            fav.UserID = User.Identity.GetUserId();
+            fav.PlaceID = tempList[row].PlaceID;
+
+            db.Favorites.Add(fav);
+            db.SaveChangesAsync();
+
+            }
+        });
     }
 
 </script>
@@ -180,7 +189,7 @@
             </tr>
 
             @foreach (var item in Model)
-        {
+            {
                 <tr id="@tblrow">
                     <td>Table Row: tblrow</td>
                     <td>
@@ -206,9 +215,9 @@
                         @Html.DisplayFor(modelItem => item.WebSite)
                     </td>
                 </tr>
-            tblrow++;
+                tblrow++;
 
-        }
+            }
 
         </table>
     </div>
