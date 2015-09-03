@@ -1,7 +1,18 @@
-﻿@model IEnumerable<DetroitEatz.Models.Restaurant>
+﻿@using DetroitEatz.Models;
+@using DetroitEatz.DAL;
+@using Microsoft.AspNet.Identity;
+@model IEnumerable<DetroitEatz.Models.Restaurant>
 @section scripts {
     @Scripts.Render("~/bundles/app")
+   @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
 }
+<head accept="json">
+    <title></title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+
 
 <div>
     <p>@ViewBag.userName</p>
@@ -18,11 +29,17 @@
 <script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>
 <script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>
 
+
 <div class="page-header">
+
+@*<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>*@
+<div align="center" class="page-header">
+
     <h2>
         DetroitEatz
     </h2>
 </div>
+
 
 @*<small><a href="#" data-bind="click: $parent.test">Details</a></small>
     <p data-bind="text: favoriteDetail"></p>*@
@@ -44,9 +61,41 @@
 </div>
 <div id="map"></div>
 
+
+<div id="panel">
+    <input style="border-color:black; color:white;background-color:blue" id="address" type="text" value="New Delhi">
+    <input style="border-color:black; color:white;background-color:blue" type="button" value="Search" onclick="test()">
+    <p id="product" />
+</div>
+
+@if (User.Identity.IsAuthenticated)
+{
+    <div align="left" class="col-md-4">
+        <table class="table">
+            <tr>
+                <th>
+                    Restaurant Name
+                </th>
+                <th>
+                    Restaurant Address
+                </th>
+            </tr>
+            @if (ViewBag.Favorites != null)
+            {
+                List<Favorite> favList = new List<Favorite>();
+                foreach (Favorite f in ViewBag.Favorites)
+                {
+
+                    favList.Add(f);
+                }
+                for (int i = 0; i < favList.Count; i++)
+                {
+
+
 <div class="btn btn-success" id="toggle_traffic">Traffic</div>
 <div class="btn btn-danger" id="toggle_transit">Transit</div>
 <div class="btn btn-primary" id="toggle_bike">Biking</div>
+
 
 @*<div id="panel">        
         <input id="address" type="text" value="">
@@ -56,49 +105,195 @@
     <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
     </div>*@
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PriceLevel)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.WebSite)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.State)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rating)
-        </th>
-        <th></th>
-    </tr>
+                    <tr>
+                        <td>Row: @i</td>
+                        <td>
+                            @favList[i].RestaurantName
+                        </td>
+                        <td>
+                            @favList[i].PlaceID
+                        </td>
+                    </tr>
 
-    @foreach (var item in Model)
+                }
+            }
+        </table>
+
+
+
+    </div>
+}
+@{
+    List<Restaurant> tempList = new List<Restaurant>();
+    Restaurant r1 = new Restaurant();
+    r1.AddressNumber = "adr1";
+    r1.PlaceID = "plc1";
+    r1.Name = "r1";
+
+    Restaurant r2 = new Restaurant();
+    r2.AddressNumber = "adr2";
+    r2.PlaceID = "plc2";
+    r2.Name = "r2";
+
+    Restaurant r3 = new Restaurant();
+    r3.AddressNumber = "adr3";
+    r3.PlaceID = "plc3";
+    r3.Name = "r3";
+
+    tempList.Add(r1);
+    tempList.Add(r2);
+    tempList.Add(r3);
+}
+
+
+
+<table class="table">
+    @{int row = 0;}
+    @for (row = (tempList.Count - 1); row >= 0; row--)
     {
+
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
+                Row: @row
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PriceLevel)
+                @tempList[row].AddressNumber
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.WebSite)
+                @tempList[row].PlaceID
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.State)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Rating)
-            </td>
-            <td>
-                @Html.ActionLink("Home", "Index", new { id = item.PlaceID }) 
-               
+                <button id="@row" onclick="addToFav('@row')" class="btn btn-success">Add To Favorites</button>
             </td>
         </tr>
     }
+    @{row = 0;}
+
+
 
 </table>
+
+
+
+<script type="text/javascript">
+
+    function addToFav(num) {
+
+
+
+        $(document).ready(function () {
+            @{
+            RestaurantContext db = new RestaurantContext();
+
+            Favorite fav = new Favorite();
+            fav.RestaurantName = tempList[row].Name;
+            fav.UserID = User.Identity.GetUserId();
+            fav.PlaceID = tempList[row].PlaceID;
+
+            db.Favorites.Add(fav);
+            db.SaveChangesAsync();
+
+            }
+        });
+    }
+
+</script>
+
+
+
+
+
+
+
+
+
+<div id="map" class="col-md-8" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;">
+</div>
+@*@if (ViewBag.ValidRestaurants != null)
+    {
+        foreach (var r in ViewBag.ValidRestaurants)
+        {
+            foreach(var stuff in r)
+            {
+            <p>r.RestaurantName</p>
+            }
+        }
+    }*@
+@if (Model != null)
+{
+    int tblrow = 0;
+
+    <div class="col-md-8">
+        <table class="table">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PriceLevel)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Rating)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.AddressNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.WebSite)
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr id="@tblrow">
+                    <td>Table Row: tblrow</td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PriceLevel)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Rating)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AddressNumber)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+                        @*@Ajax.ActionLink("Add To Favorites")*@
+                    </td>
+                    <td a href="#">
+                        @Html.DisplayFor(modelItem => item.WebSite)
+                    </td>
+                </tr>
+                tblrow++;
+
+            }
+
+        </table>
+    </div>
+    
+}
+<script language="JavaScript" type="text/javascript">
+
+   
+
+    $.ajax({
+        url: 'api/GetRestaurants/detroit',
+        type: 'GET',
+        data: { 'foo': 'bar' },
+        
+
+
+    });
+    
+
+</script>
+
