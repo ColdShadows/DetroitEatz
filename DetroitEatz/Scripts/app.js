@@ -1,44 +1,25 @@
-﻿/*
-var ViewModel = function () {
-
-    var self = this;
-    self.users = ko.observableArray();
-    self.restaurants = ko.observableArray();//database fetch of restaurants
-    self.favoriteDetail = ko.observable();
-    self.error = ko.observable();
-    /*
-            self.getRestaurants = function (formElement) {
-                ajaxHelper(restaurantsUri, 'GET').done(function (data) {
-                    self.restaurants(data);
-                });
-            }
-            */
-
-
+﻿
 var foodPlace;
 var id;
 var map;
 var service;
 var infowindow;
-var types;
-var radius;
+var add;
+//var restaurants = {
+//    PlaceID: details.id,
+//    Name: details.name,
+//    PriceLevel: details.price_level,
+//    WebSite: details.website,
+//    Rating: details.rating
+//};
 var restaurantsUri = '/api/Restaurants/';
-
-
-/*
-$(document).ready(function () {
-   // alert('Ouch');
-    ajaxHelper(restaurantsUri, 'POST', food);
-    ajaxHelper(restaurantsUri, 'GET');
-    alert('hyt');
-    });
-*/
 
 function ajaxHelper(uri, method, data) {
     //self.error(''); // Clear error message
     return $.ajax({
         type: method,
-        url: uri, dataType: 'json',
+        url: uri,
+        dataType: 'json',
         contentType: 'application/json',
         data: data ? JSON.stringify(data) : null
     }).fail(function (jqXHR, textStatus, errorThrown) {
@@ -49,28 +30,27 @@ function ajaxHelper(uri, method, data) {
 }
 
 function initialize() {
-    var detroit = new google.maps.LatLng(location.coords.latitude, location.coords.longitude);
+
+    add = new google.maps.LatLng(42.331427, -83.0457538);
 
     map = new google.maps.Map(document.getElementById('map'), {
         mapTypeId: google.maps.MapTypeId.ROADMAP,
-        center: detroit,
+        center: add,
         zoom: 15
     });
-
+   
     var request = {
-        location: detroit,
-        radius: 2000,
-        //types: ['restaurant']
-        //types: '@Encoder.JavaScriptEncode(ViewBag.foodChoice, false)'
-        //types: '@ViewBag.foodChoice'
+        location: add,
+        radius: '500',
+        query: 'burgers'
     };
     infowindow = new google.maps.InfoWindow();
     service = new google.maps.places.PlacesService(map);
-    service.search(request, callback);
+    service.textSearch(request, callback);
 }
 
 function callback(results, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
         for (var i = 0; i < results.length; i++) {
             createMarker(results[i]);
             //id = i + 1;
@@ -112,35 +92,31 @@ function createMarker(place) {
         //});
 
         google.maps.event.addListener(marker, 'click', function () {
-            infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level + "<br />" + details.opening_hours.periods[1].open.time);
+            infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level + "<br />" + details.opening_hours.periods[1].open);
             infowindow.open(map, marker);
-
-google.maps.event.addDomListener(window, 'load', initialize);
-$(function () {
-    //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: 'Hello World' }).appendTo($('table'));
-    //$('<tr>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: 'Hello World' }).appendTo($('table'));
-    $('<tr>', { text: 'Hello World' }).appendTo($('table'));
-    $('<td>', { text: placeholder}).appendTo($('table')); 
-});
-$(document).ready(function () {
-     //Send an AJAX request       
-    $.getJSON(restaurantsUri)
-        .done(function (data) {             
-             //On success, 'data' contains a list of products.             
-            $.each(data, function (key, item) {               
-                 //Add a list item for the product.               
-                $('<li>', { text: formatItem(item) }).appendTo($('#products'));
-            });
         });
-});
-
-function formatItem(item) {
-    return item.Name + ': ' + item.PriceLevel;
+    });         
 }
- 
-//};
-    //ko.applyBindings(new ViewModel());
+
+
+function codeAddress() {
+    var geocoder = new google.maps.Geocoder();
+    add = document.getElementById('address').value;
+    geocoder.geocode({ 'address': add }, function (results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            start = map.setCenter(results[0].geometry.location);
+        }
+    });
+
+    var request = {
+        location: add,
+        radius: '500',
+        query: 'burgers'
+    };
+    infowindow = new google.maps.InfoWindow();
+    service = new google.maps.places.PlacesService(map);
+    service.textSearch(request, callback);
+
+}
+google.maps.event.addDomListener(window, 'load', initialize);
+
