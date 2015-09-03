@@ -78,7 +78,10 @@ function returnList()
            traditional: true,
            success: alert("yay")
        }).fail(alert("oops"));
-   // $.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
+    
+    //$.post('/Home/Index', $.param({ data: listOfRestaurants }, true));
+
+    
 }
 
 function callback(results, status) {

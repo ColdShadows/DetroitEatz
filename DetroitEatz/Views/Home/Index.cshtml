@@ -4,7 +4,15 @@
 @model IEnumerable<DetroitEatz.Models.Restaurant>
 @section scripts {
     @Scripts.Render("~/bundles/app")
+   @Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/jqueryval")
 }
+<head accept="json">
+    <title></title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+
+
 
 <div>
     <p>@ViewBag.userName</p>
@@ -221,4 +229,55 @@
 
         </table>
     </div>
+    
 }
+<script language="JavaScript" type="text/javascript">
+
+    //function ajaxHelper(uri, method, data) {
+        
+    //    return $.ajax({
+    //        type: method,
+    //        url: uri,
+    //        dataType: 'json',
+    //        contentType: 'application/json',
+    //        data: data ? JSON.stringify(data) : null
+    //    }).fail(function (jqXHR, textStatus, errorThrown) {
+    //        self.error(errorThrown);
+    //    });
+    //}
+    //ajaxHelper('api/GetRestaurants/detroit', 'GET', 'grand circus');
+
+    $.ajax({
+        url: 'api/GetRestaurants/detroit',
+        type: 'GET',
+        data: { 'foo': 'bar' },
+        success: alert('yay1')
+
+
+    }).fail(alert('fail1'));
+    //$.ajax({
+    //    url: 'api/Restaurant',
+    //    type: 'GET',
+    //    data: { 'foo': 'bar' },
+    //    success: alert('yay2')
+
+
+    //}).fail(alert('fail2'));
+    //$.ajax({
+    //    url: 'api/GetRestaurants/{place}',
+    //    type: 'GET',
+    //    data: { 'foo': 'bar' },
+    //    success: alert('yay3')
+
+
+    //}).fail(alert('fail3'));
+    //$.ajax({
+    //    url: 'api/GetRestaurants/4',
+    //    type: 'GET',
+    //    data: { 'foo': 'bar' },
+    //    success: alert('yay1')
+
+
+    //}).fail(alert('fail4'));
+
+</script>
