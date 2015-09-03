@@ -70,16 +70,24 @@ namespace DetroitEatz.Controllers
 
 
 
-                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&components=administrative_components:MI|country:US&key=" + geokey;
+                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + geokey;
 
                 string results = client.DownloadString(uri);
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
-                
-               
+
+                GeoResponse georesults = js.Deserialize<GeoResponse>(results);
                 
 
-                return new Coordinate(Convert.ToDouble(jsonResults), Convert.ToDouble(jsonResults));
+                results.ToArray();
+
+
+
+
+
+
+
+                return new Coordinate(Convert.ToDouble(georesults.Results[0].Geometry.Location.Lat), Convert.ToDouble(georesults.Results[0].Geometry.Location.Lng));
 
             }
 
@@ -119,18 +127,22 @@ namespace DetroitEatz.Controllers
 
                string results = client.DownloadString(uri);
 
-               var placesResponse = System.Web.Helpers.Json.Decode(results);
+               JavaScriptSerializer js = new JavaScriptSerializer();
 
-               foreach( var result in placesResponse.results)
+               PlacesResponse placesresults = js.Deserialize<PlacesResponse>(results);
+
+
+
+               for(int i = 0; i < placesresults.Results.Length; i++ )
                {
 
-                   detailUri += "placeid=" + result.placeId + "&key=" + mapkey;
+                   detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
 
                    string details = client.DownloadString(detailUri);
 
                    var detailsResponse = System.Web.Helpers.Json.Decode(details);
 
-                   foreach( var detail in detailsResponse.results)
+                   foreach (var detail in detailsResponse.results)
                    {
 
                        restaurants.Add(new Restaurant()
@@ -144,12 +156,12 @@ namespace DetroitEatz.Controllers
                            });
 
                    }
-                   
 
-                       
-                       
-                       
-                  
+
+
+
+
+
 
                }
 

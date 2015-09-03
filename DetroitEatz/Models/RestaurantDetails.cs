@@ -6,8 +6,7 @@ using System.Threading.Tasks;
 
 namespace DetroitEatz.Models
 {
-    class GeoLocation
+    class RestaurantDetails
     {
-
     }
 }
