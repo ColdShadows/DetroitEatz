@@ -22,7 +22,7 @@ namespace DetroitEatz.Models
     public class GeoResult
     {
         public GeoGeometry Geometry { get; set; }
-        public GeoAddress_Component[] Adress_Components {get;set;}
+        public GeoAddress_Component[] Address_Components {get;set;}
     }
  
     public class GeoResponse

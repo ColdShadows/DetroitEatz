@@ -212,9 +212,11 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DetailResults.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\GeoCodingResults.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\Json2CSharp.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\PlacesResults.cs" />
     <Compile Include="Models\Restaurant.cs" />

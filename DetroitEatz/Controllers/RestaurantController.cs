@@ -140,22 +140,22 @@ namespace DetroitEatz.Controllers
 
                    string details = client.DownloadString(detailUri);
 
-                   var detailsResponse = System.Web.Helpers.Json.Decode(details);
+                  
 
-                   foreach (var detail in detailsResponse.results)
-                   {
-
+                   RootObject detailresults = js.Deserialize<RootObject>(details);
+                   
+                  
                        restaurants.Add(new Restaurant()
                            {
-                               Name = detail.name,
-                               PlaceID = detail.place_id,
-                               AddressNumber = detail.formatted_address,
-                               PhoneNumber = detail.formatted_phone_number,
-                               Rating = detail.rating,
-                               WebSite = detail.website
+                               Name = detailresults.result.name,
+                               PlaceID = detailresults.result.place_id,
+                               AddressNumber = detailresults.result.formatted_address,
+                               PhoneNumber = detailresults.result.formatted_phone_number,
+                               Rating = detailresults.result.rating.ToString(),
+                               WebSite = detailresults.result.website
                            });
 
-                   }
+                   
 
 
 
@@ -164,18 +164,11 @@ namespace DetroitEatz.Controllers
 
 
                }
-
-
-
-
-
+               
                return restaurants;
 
 
-               //WebRequest request = WebRequest.Create(uri);
-               //request.Method = "GET";
-               //request.ContentType = "application/json";
-               //request.GetResponse();
+               
            }
        }
 
