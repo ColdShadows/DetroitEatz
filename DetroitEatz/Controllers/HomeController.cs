@@ -7,6 +7,7 @@ using System.Data.Entity;
 using Microsoft.AspNet.Identity;
 using DetroitEatz.Models;
 using DetroitEatz.DAL;
+
 namespace DetroitEatz.Controllers
 {
     public class HomeController : Controller
@@ -45,6 +46,11 @@ namespace DetroitEatz.Controllers
                 ViewBag.userID = userID;
             }
 
+            //var remove = from r in db.Restaurants
+            //             select r;
+
+            //db.Restaurants.RemoveRange(remove);
+            //db.SaveChanges();
            //Test of Viewbag
             //List<Restaurant> validRestaurants = new List<Restaurant>();
             //if (ViewBag.ListOfRestaurants != null)
@@ -74,7 +80,7 @@ namespace DetroitEatz.Controllers
             //}
 
 
-
+            
 
 
 
