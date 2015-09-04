@@ -20,18 +20,18 @@ namespace DetroitEatz.Controllers
            
             
             //Create new Favorite
-                Favorite newFav = new Favorite
-                {
+                //Favorite newFav = new Favorite
+                //{
 
-                    UserID = User.Identity.GetUserName(),
-                    PlaceID = "k",
-                    RestaurantName = "k"
+                //    UserID = User.Identity.GetUserName(),
+                //    PlaceID = "k",
+                //    RestaurantName = "k"
 
-                };
-                    //Add That value to private DB
-                db2.Favorites.Add(newFav);
-                    //Save those changes from private DB to main DB
-                db2.SaveChanges();
+                //};
+                //    //Add That value to private DB
+                //db2.Favorites.Add(newFav);
+                //    //Save those changes from private DB to main DB
+                //db2.SaveChanges();
             
                         
             //Getting User Information

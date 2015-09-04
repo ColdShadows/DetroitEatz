@@ -21,9 +21,9 @@ namespace DetroitEatz.Controllers
 {
     public class RestaurantController : ApiController
     {
-        string mapkey = "AIzaSyDC6t7o26kX3LTfxraVFebdSXG-cF7wcGo";
-        string geokey = "AIzaSyBvYhRMHuDQUfyIv_HlVaMZXbxs8L5ZPko";
-
+        string TravisKey = "AIzaSyDC6t7o26kX3LTfxraVFebdSXG-cF7wcGo";
+        string KevKey = "AIzaSyA5_ZOFKsL19JZR2mDEKcEy6MB6CMwnKlg";
+        
         private RestaurantContext db = new RestaurantContext();
 
         //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
@@ -70,7 +70,7 @@ namespace DetroitEatz.Controllers
 
 
 
-                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + geokey;
+                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + KevKey;
 
                 string results = client.DownloadString(uri);
 
@@ -130,7 +130,7 @@ namespace DetroitEatz.Controllers
                 double radius = 500;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
 
-                uri += "key=" + mapkey + "&";
+                uri += "key=" + KevKey + "&";
                 uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
                 uri += "radius=" + radius.ToString() + "&";
                 uri += "types=restaurant";
@@ -152,7 +152,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + KevKey;
 
                             string details = client.DownloadString(detailUri);
 
@@ -189,7 +189,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + KevKey;
 
                             string details = client.DownloadString(detailUri);
 

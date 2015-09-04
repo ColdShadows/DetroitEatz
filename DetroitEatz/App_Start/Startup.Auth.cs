@@ -8,9 +8,20 @@ using Owin;
 using DetroitEatz.Models;
 
 namespace DetroitEatz
-{
+{               
     public partial class Startup
     {
+        //Travis
+        string TCS = "kYd2lkmxqD3Gotk1W9Fx80pq";
+        string TCI = "943763765031-upav1b7uhljhfagajdkfdd5gd1q1g6s0.apps.googleusercontent.com";
+
+        //Kevin
+
+        string KCS = "hdw_ACxVAy-IJ0DUWNhXg5iK";
+        string KCI = "611271203630-gldfmbeqkimio0t288l4d6ltmbmhl4n4.apps.googleusercontent.com";
+                     
+
+
         // For more information on configuring authentication, please visit http://go.microsoft.com/fwlink/?LinkId=301864
         public void ConfigureAuth(IAppBuilder app)
         {
@@ -60,8 +71,9 @@ namespace DetroitEatz
 
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
-                ClientId = "943763765031-upav1b7uhljhfagajdkfdd5gd1q1g6s0.apps.googleusercontent.com",
-                ClientSecret = "kYd2lkmxqD3Gotk1W9Fx80pq",
+                
+                ClientId = KCI,
+                ClientSecret = KCS,
                 Provider= new GoogleOAuth2AuthenticationProvider()
             });
         }

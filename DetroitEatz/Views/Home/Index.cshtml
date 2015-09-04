@@ -7,7 +7,7 @@
    @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 }
-<head accept="json">
+<head accept="text/html">
     <title></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
@@ -92,9 +92,9 @@
                 {
 
 
-<div class="btn btn-success" id="toggle_traffic">Traffic</div>
+@*<div class="btn btn-success" id="toggle_traffic">Traffic</div>
 <div class="btn btn-danger" id="toggle_transit">Transit</div>
-<div class="btn btn-primary" id="toggle_bike">Biking</div>
+<div class="btn btn-primary" id="toggle_bike">Biking</div>*@
 
 
 @*<div id="panel">        
@@ -145,7 +145,9 @@
     tempList.Add(r3);
 }
 
+    <table id="tbl">
 
+    </table>
 
 <table class="table">
     @{int row = 0;}
@@ -200,7 +202,18 @@
 </script>
 
 
+    <table>
 
+        <tr>
+            <td> Author </td>
+
+
+
+        </tr>
+
+
+
+    </table>
 
 
 
@@ -294,27 +307,61 @@
 
     $(document).ready(function ()
     {
+          
+        
         $.getJSON('api/GetRestaurants/detroit')
-        .done(function (data)
-        {
-            $.each(data, function (key, item)
-            {
-                $('<li>', {text: formatItem(item)}).appendTo($('#'))
-            })
-        })
+            .done(function (data) { fillArray(data, function (dataArray) { AddToTable(dataArray) }) })
+        
+        
+        
     });
-    
-    //$(document).ready(function () {
-    //    // Send an AJAX request
-    //    $.getJSON(apiUrl)
-    //        .done(function (data) {
-    //            // On success, 'data' contains a list of products.
-    //            $.each(data, function (key, item) {
-    //                // Add a list item for the product.
-    //                $('<li>', { text: formatItem(item) }).appendTo($('#products'));
-    //            });
-    //        });
-    //});
+
+   
+    function fillArray(data, callback)
+    {
+        var restaurant =
+         {
+             Name: "",
+             PhoneNumber: "",
+             PlaceID: "",
+             Rating: 0,
+             Website: ""
+         };
+
+        var dataArray = new Array();
+
+        //for (var k = 0; k < data.length; k++)
+        var k = 0;
+        while( k < data.length)
+        {
+            restaurant.Name = data[k].Name;
+            restaurant.PhoneNumber = data[k].PhoneNumber;
+            restaurant.PlaceID = data[k].PlaceID;
+            restaurant.Rating = data[k].Rating;
+
+            dataArray.push(restaurant);
+            k++;
+        }
+        callback(AddToTable(dataArray));
+    }
+    function AddToTable(dataArray) {
+        document.getElementById("tbl").innerHTML =
+            '<tr>' +
+            '<th>Restaurant Name</th>' +
+            '<th>Restaurant PlaceID</th>'
+        //for (var i = 0; i < dataArray.length; i++)
+        var i = 0;
+        while( i < dataArray.length)
+        {
+            +'<tr>'
+            + '<td>' + dataArray[i].Name + '</td>'
+            + '<td>' + dataArray[i].PlaceID + '</td>'
+
+
+            + '</tr>';
+            i++;
+        }
+    }
 
 </script>
 
