@@ -26,22 +26,22 @@ namespace DetroitEatz.Controllers
 
         private RestaurantContext db = new RestaurantContext();
 
-       //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
-       // {
-       //    List<Restaurant> validRestaurants = new List<Restaurant>();
+        //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
+        // {
+        //    List<Restaurant> validRestaurants = new List<Restaurant>();
 
-       //    foreach(Restaurant r in restaurants)
-       //        if(ModelState.IsValid)
-       //        {
-       //            validRestaurants.Add(r);
-       //        }
-
-           
+        //    foreach(Restaurant r in restaurants)
+        //        if(ModelState.IsValid)
+        //        {
+        //            validRestaurants.Add(r);
+        //        }
 
 
 
-       //    return (validRestaurants);
-       // }
+
+
+        //    return (validRestaurants);
+        // }
 
         //Coordinate
         public struct Coordinate
@@ -49,7 +49,7 @@ namespace DetroitEatz.Controllers
             private double lat;
             private double lon;
 
-            public Coordinate( double latitude, double longitude)
+            public Coordinate(double latitude, double longitude)
             {
                 lat = latitude;
                 lon = longitude;
@@ -64,8 +64,8 @@ namespace DetroitEatz.Controllers
         //Get Coordinates
         public Coordinate getCoordinate(string searchPlace)
         {
-            
-            using(var client = new WebClient())
+
+            using (var client = new WebClient())
             {
 
 
@@ -76,116 +76,175 @@ namespace DetroitEatz.Controllers
 
                 JavaScriptSerializer js = new JavaScriptSerializer();
 
+
                 GeoResponse georesults = js.Deserialize<GeoResponse>(results);
-                
-
-                results.ToArray();
 
 
+                if (georesults.Status == "OK")
+                {
+
+
+                    return new Coordinate(Convert.ToDouble(georesults.Results[0].Geometry.Location.Lat), Convert.ToDouble(georesults.Results[0].Geometry.Location.Lng));
+
+
+                }
+                else
+                {
+
+
+                    return new Coordinate(42.3347, -83.0497);
+                }
 
 
 
 
 
-                return new Coordinate(Convert.ToDouble(georesults.Results[0].Geometry.Location.Lat), Convert.ToDouble(georesults.Results[0].Geometry.Location.Lng));
+
+
 
             }
 
-            
+
 
         }
 
         //Get
-        [Route( "Home/api/GetRestaurants/{place}")]
+        [Route("Home/api/GetRestaurants/{place}")]
         [HttpGet]
         public IEnumerable<Restaurant> GetRestaurants(string place)
-       {
-           using (WebClient client = new WebClient())
-           {
+        {
+            using (WebClient client = new WebClient())
+            {
 
-               double lat = 42.331427;
-               double lon = -83.0457538;
+                double lat = 42.331427;
+                double lon = -83.0457538;
 
-               List<Restaurant> restaurants = new List<Restaurant>();
-               
-                   Coordinate coords = getCoordinate(place);
+                List<Restaurant> restaurants = new List<Restaurant>();
 
-                   lat = coords.Latitude;
-                   lon = coords.Longitude;
-                  
-               
-               double radius = 2000;
-               string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
+                Coordinate coords = getCoordinate(place);
 
-               uri += "key=" + mapkey + "&";
-               uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
-               uri += "radius=" + radius.ToString() + "&";
-               uri += "types=restaurant";
-
-               string detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
+                lat = coords.Latitude;
+                lon = coords.Longitude;
 
 
-               string results = client.DownloadString(uri);
+                double radius = 500;
+                string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
 
-               JavaScriptSerializer js = new JavaScriptSerializer();
+                uri += "key=" + mapkey + "&";
+                uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
+                uri += "radius=" + radius.ToString() + "&";
+                uri += "types=restaurant";
 
-               PlacesResponse placesresults = js.Deserialize<PlacesResponse>(results);
+                string detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
 
 
+                string results = client.DownloadString(uri);
 
-               for(int i = 0; i < placesresults.Results.Length; i++ )
-               {
+                JavaScriptSerializer js = new JavaScriptSerializer();
 
-                   detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+                PlacesResponse placesresults = js.Deserialize<PlacesResponse>(results);
 
-                   string details = client.DownloadString(detailUri);
 
-                  
+                if (placesresults.Results.Length < 30)
+                {
+                    for (int i = 0; i < placesresults.Results.Length; i++)
+                    {
+                        if (placesresults.Status == "OK")
+                        {
+                            detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
 
-                   RootObject detailresults = js.Deserialize<RootObject>(details);
-                   
-                  
-                       restaurants.Add(new Restaurant()
-                           {
-                               Name = detailresults.result.name,
-                               PlaceID = detailresults.result.place_id,
-                               AddressNumber = detailresults.result.formatted_address,
-                               PhoneNumber = detailresults.result.formatted_phone_number,
-                               Rating = detailresults.result.rating.ToString(),
-                               WebSite = detailresults.result.website
-                           });
-
-                   
+                            string details = client.DownloadString(detailUri);
 
 
 
+                            RootObject detailresults = js.Deserialize<RootObject>(details);
+
+                            if (detailresults.status == "OK")
+                            {
+                                restaurants.Add(new Restaurant()
+                                    {
+                                        Name = detailresults.result.name,
+                                        PlaceID = detailresults.result.place_id,
+                                        AddressNumber = detailresults.result.formatted_address,
+                                        PhoneNumber = detailresults.result.formatted_phone_number,
+                                        Rating = detailresults.result.rating.ToString(),
+                                        WebSite = detailresults.result.website
+                                    });
+
+                            }
+
+                        }
 
 
 
 
-               }
-               
-               return restaurants;
+
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i <= 30; i++)
+                    {
+                        if (placesresults.Status == "OK")
+                        {
+                            detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+
+                            string details = client.DownloadString(detailUri);
 
 
-               
-           }
-       }
+
+                            RootObject detailresults = js.Deserialize<RootObject>(details);
+
+                            if (detailresults.status == "OK")
+                            {
+                                restaurants.Add(new Restaurant()
+                                {
+                                    Name = detailresults.result.name,
+                                    PlaceID = detailresults.result.place_id,
+                                    AddressNumber = detailresults.result.formatted_address,
+                                    PhoneNumber = detailresults.result.formatted_phone_number,
+                                    Rating = detailresults.result.rating.ToString(),
+                                    WebSite = detailresults.result.website
+                                });
+
+                            }
+
+                        }
+
+
+
+
+
+                    }
+                }
+
+
+                
+
+
+                return restaurants;
+
+
+
+            }
+        }
 
 
         public IEnumerable<Favorite> getFavorites()
         {
-            
+
             string user = User.Identity.GetUserId();
 
 
             var favoriteslist = from f in db.Favorites
-                            where f.UserID == user
-                            select f; 
-                                
+                                where f.UserID == user
+                                select f;
 
 
-                return favoriteslist;
+
+            return favoriteslist;
 
         }
 

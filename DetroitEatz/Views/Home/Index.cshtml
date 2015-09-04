@@ -19,15 +19,15 @@
     <p>@ViewBag.userID</p>
 </div>
  
-<link rel="stylesheet" href="~/Content/map.css" />
-@*Scripts added to use for current location button*@
+@*<link rel="stylesheet" href="~/Content/map.css" />
+
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
 <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>
 <script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>
-<script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>*@
 
 
 <div class="page-header">
@@ -44,7 +44,7 @@
 @*<small><a href="#" data-bind="click: $parent.test">Details</a></small>
     <p data-bind="text: favoriteDetail"></p>*@
 
-<input id="pac-input" class="controls" type="text"
+@*<input id="pac-input" class="controls" type="text"
        placeholder="Enter a location">
 <div id="type-selector" class="controls">
     <input type="radio" name="type" id="changetype-all" checked="checked">
@@ -59,7 +59,7 @@
     <input type="radio" name="type" id="changetype-geocode">
     <label for="changetype-geocode">Geocodes</label>
 </div>
-<div id="map"></div>
+<div id="map"></div>*@
 
 
 <div id="panel">
@@ -285,15 +285,36 @@
 
    
 
-    $.ajax({
-        url: 'api/GetRestaurants/detroit',
-        type: 'GET',
-        data: { 'foo': 'bar' },
-        
+    //$.ajax({
+    //    url: 'api/GetRestaurants/detroit',
+    //    type: 'GET',
+    //    data: { 'foo': 'bar' },
 
+    //});
 
+    $(document).ready(function ()
+    {
+        $.getJSON('api/GetRestaurants/detroit')
+        .done(function (data)
+        {
+            $.each(data, function (key, item)
+            {
+                $('<li>', {text: formatItem(item)}).appendTo($('#'))
+            })
+        })
     });
     
+    //$(document).ready(function () {
+    //    // Send an AJAX request
+    //    $.getJSON(apiUrl)
+    //        .done(function (data) {
+    //            // On success, 'data' contains a list of products.
+    //            $.each(data, function (key, item) {
+    //                // Add a list item for the product.
+    //                $('<li>', { text: formatItem(item) }).appendTo($('#products'));
+    //            });
+    //        });
+    //});
 
 </script>
 

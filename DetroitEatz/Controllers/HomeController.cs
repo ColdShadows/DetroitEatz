@@ -98,37 +98,37 @@ namespace DetroitEatz.Controllers
 
             
         }
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult Index(List<Restaurant> restaurants)
-        {
-            List<Restaurant> validRestaurants = new List<Restaurant>();
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Index(List<Restaurant> restaurants)
+        //{
+        //    List<Restaurant> validRestaurants = new List<Restaurant>();
 
-            foreach(Restaurant r in restaurants)
-            {
-                if (ModelState.IsValid)
-                {
-                    validRestaurants.Add(r);
-                }
+        //    foreach(Restaurant r in restaurants)
+        //    {
+        //        if (ModelState.IsValid)
+        //        {
+        //            validRestaurants.Add(r);
+        //        }
 
-            }
+        //    }
 
 
-            return View(validRestaurants);
-        }
+        //    return View(validRestaurants);
+        //}
 
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddFavorite(List<Restaurant> restaurants)
-        {
+        //[HttpPost]
+        //[AllowAnonymous]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult AddFavorite(List<Restaurant> restaurants)
+        //{
 
-            //db.Favorites.Add();
+        //    //db.Favorites.Add();
 
-            return RedirectToAction("Index");
+        //    return RedirectToAction("Index");
 
-        }
+        //}
 
     }
 }
