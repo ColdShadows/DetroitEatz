@@ -18,7 +18,9 @@
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
 </div>
+
  
+
 @*<link rel="stylesheet" href="~/Content/map.css" />
 
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
@@ -295,7 +297,7 @@
     
 }
 <script language="JavaScript" type="text/javascript">
-
+    var restaurants = new Array();
    
 
     //$.ajax({
@@ -342,6 +344,7 @@
             dataArray.push(restaurant);
             k++;
         }
+        restaurants = dataArray;
         callback(AddToTable(dataArray));
     }
     function AddToTable(dataArray) {
@@ -353,7 +356,8 @@
         var i = 0;
         while( i < dataArray.length)
         {
-            +'<tr>'
+            document.getElementById("tbl").innerHTML += 
+            '<tr>'
             + '<td>' + dataArray[i].Name + '</td>'
             + '<td>' + dataArray[i].PlaceID + '</td>'
 
