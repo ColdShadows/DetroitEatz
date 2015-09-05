@@ -23,15 +23,16 @@ namespace DetroitEatz
                       "~/Scripts/bootstrap.js",
                       "~/Scripts/respond.js"));
 
-            bundles.Add(new StyleBundle("~/Content/css").Include(
+            bundles.Add(new StyleBundle("~/Content/Sitecss").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-social.css",
                       "~/Content/css/font-awesome.css",
-                      "~/Content/site.css"));
+                      "~/Content/site.css"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
-                "~/Scripts/knockout-{version}.js",
-                "~/Scripts/app.js"));
+                "~/Scripts/knockout-{version}.js"//,
+                /*"~/Scripts/app.js"*/));
         }
     }
 }
