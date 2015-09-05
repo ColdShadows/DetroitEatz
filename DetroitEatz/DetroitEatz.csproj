@@ -202,6 +202,14 @@
     <Compile Include="Migrations\201508252021561_PlaceID.Designer.cs">
       <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509041302422_stuff1.cs" />
+    <Compile Include="Migrations\201509041302422_stuff1.Designer.cs">
+      <DependentUpon>201509041302422_stuff1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509051526441_oops12.cs" />
+    <Compile Include="Migrations\201509051526441_oops12.Designer.cs">
+      <DependentUpon>201509051526441_oops12.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Favorite.cs" />
@@ -314,6 +322,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201508252021561_PlaceID.resx">
       <DependentUpon>201508252021561_PlaceID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509041302422_stuff1.resx">
+      <DependentUpon>201509041302422_stuff1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509051526441_oops12.resx">
+      <DependentUpon>201509051526441_oops12.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
