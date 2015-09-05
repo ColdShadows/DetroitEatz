@@ -7,14 +7,16 @@
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
 </div>
-
+ 
 <link rel="stylesheet" href="~/Content/map.css" />
+@*Scripts added to use for current location button*@
 <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=true"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
 <script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>
 <script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>
+<script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>
 
 <div class="page-header">
     <h2>
@@ -40,7 +42,6 @@
     <input type="radio" name="type" id="changetype-geocode">
     <label for="changetype-geocode">Geocodes</label>
 </div>
-
 <div id="map"></div>
 
 <div class="btn btn-success" id="toggle_traffic">Traffic</div>

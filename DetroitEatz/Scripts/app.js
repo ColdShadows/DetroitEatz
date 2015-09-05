@@ -11,10 +11,35 @@ var food = {
     Rating: '2'
 };
 
+//Start geolocation
+
+if (navigator.geolocation) {
+
+    function error(err) {
+        console.warn('ERROR(' + err.code + '): ' + err.message);
+    }
+
+    function success(pos) {
+        userCords = pos.coords;
+
+        //return userCords;
+    }
+
+    // Get the user's current position
+    navigator.geolocation.getCurrentPosition(success, error);
+    //console.log(pos.latitude + " " + pos.longitude);
+}
+else {
+    alert('Geolocation is not supported in your browser');
+}
+//End Geo location
+
 //Adding info window option
 infowindow = new google.maps.InfoWindow({
     content: "holding..."
 });
+
+
 
 /*
 $(document).ready(function () {

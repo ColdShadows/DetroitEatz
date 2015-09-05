@@ -1,8 +1,6 @@
 ﻿var map;
 var infowindow;
 var service;
-var i = 0;
-var markers = [];
 
 //start Map Initialization
 function initMap(location) {
@@ -12,12 +10,11 @@ function initMap(location) {
         {
             //getting current locations using coordinates
             center: new google.maps.LatLng(location.coords.latitude, location.coords.longitude),
-            zoom: 14,
+            zoom: 13,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
-    // create map object and apply properties
     map = new google.maps.Map(document.getElementById('map'), map);
-
+    
     //Create the auto-complete object and associate it with the UI input control.
     var input = /** @type {!HTMLInputElement} */(
         document.getElementById('pac-input'));
@@ -29,7 +26,7 @@ function initMap(location) {
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.bindTo('bounds', map);
 
-    //var infowindow = new google.maps.InfoWindow();
+    var infowindow = new google.maps.InfoWindow();
 
     //Add auto-complete listener
     autocomplete.addListener('place_changed', function () {
@@ -85,7 +82,17 @@ function initMap(location) {
     setupClickListener('changetype-address', ['address']);
     setupClickListener('changetype-restaurant', ['restaurant']);
     setupClickListener('changetype-geocode', ['geocode']);
-    //autocomplete method ends   
+    //autocomplete method ends    
+
+    //marker for the current location
+    var marker = new google.maps.Marker(
+        {
+            position: new google.maps.LatLng(location.coords.latitude, location.coords.longitude),
+            map: map
+        });
+    
+    
+
 
     //draw circle on map
     var circleOptions =
@@ -141,13 +148,6 @@ function initMap(location) {
     });
     //end bikeLayer
 
-    //marker for the current location
-    var marker = new google.maps.Marker(
-        {
-            position: new google.maps.LatLng(location.coords.latitude, location.coords.longitude),
-            map: map
-        });
-
     //Places services to locate the restaurants in the given radius
     var service = new google.maps.places.PlacesService(map);
     service.nearbySearch({
@@ -157,50 +157,34 @@ function initMap(location) {
     }, callback);
 
     service = new google.maps.places.PlacesService(map);
+    
 
     //creating loop to get the markers for all the locations
     function callback(results, status) {
-        //var i = 0;
-
-
-        var interval = setInterval(function () {
-
-            setMarker(results[i]);
-            i++;
-            if (i === results.length) clearInterval(interval);
-        }, 200);
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+            for (var i = 0; i < results.length; i++) {
+                createMarker(results[i]);
+            }
+        }
     }
 
-    // A new Info Window is created and set content
-    var infowindow = new google.maps.InfoWindow({
-        content: content,
+    //function to create marker
+    function createMarker(results) {
+        var placeLoc = results.geometry.location;
+        var marker = new google.maps.Marker({
+            position: results.geometry.location,
+            map: map,
+            //icon: 'Images/rest.png',                       
+        });
 
-        // Assign a maximum value for the width of the infowindow allows
-        // greater control over the various content elements
-        maxWidth: 350
-    });
-
-    //function to create marker    
-    function setMarker(results) {
-        marker = new google.maps.Marker(
-            {
-                position: results.geometry.location,
-                icon: '/Images/rest.png',
-                map: map,
-                animation: google.maps.Animation.DROP,
-            });
-
-
-        var interval = { reference: results.reference };
-        service.getDetails(interval, function (details, status) {
-            google.maps.event.addListener(marker, 'click', function (results) {
-                infowindow.setContent(details.name + "<br />" + details.formatted_address + "<br />" + details.website + "<br />" + details.rating + "<br />" + details.formatted_phone_number + "<br />" + details.price_level);
-                infowindow.open(map, this);
-            });
+        //click listener for markers
+        google.maps.event.addListener(marker, 'click', function () {
+            infowindow.setContent(place.name);
+            infowindow.open(map, this);
         });
     }
 
-    aps.event.addDomListener(window, 'load', initialize);
+    service.nearbySearch(request, callback);
 }
 
 $(document).ready(function (location) {
