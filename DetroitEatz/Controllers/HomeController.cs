@@ -29,7 +29,7 @@ namespace DetroitEatz.Controllers
 
                 };
                     //Add That value to private DB
-                db2.Favorites.Add(newFav);
+               // db2.Favorites.Add(newFav);
                     //Save those changes from private DB to main DB
                 db2.SaveChanges();
             
