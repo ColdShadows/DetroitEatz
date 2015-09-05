@@ -129,11 +129,15 @@ namespace DetroitEatz.Controllers
 
                 double radius = 250;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
-
+                    //"https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 uri += "key=" + TravisKey + "&";
                 uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
                 uri += "radius=" + radius.ToString() + "&";
+                //uri += "rankby=distance&";
                 uri += "types=restaurant";
+                //uri += "&keyword=food";
+                //uri += "&name=''";
+                
 
                 string detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
 

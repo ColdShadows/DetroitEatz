@@ -109,9 +109,9 @@
 
 
 
-
+ 
 <input id="pac-input" class="controls" type="text"
-       placeholder="Enter a location">
+       placeholder="Enter a location, or name of place">
 <div id="type-selector" class="controls">
     <input type="radio" name="type" id="changetype-all" checked="checked">
     <label for="changetype-all">All</label>
@@ -197,34 +197,73 @@
     </table>
 
 <script language="JavaScript" type="text/javascript">
-    
-    //function success(pos) {
-    //    lat = Position.location.latitude;
-    //    lon = Position.location.longitude;
-    //}
 
-   
+    //Handles the search box input
+    function startSearch()
+    {
+        var input = (document.getElementById('pac-input'));
+                
+            infowindow.open();
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                window.alert("Autocomplete's returned place contains no geometry");
+                return;
+            }
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
+            }
+            marker.setIcon(
+                {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(35, 35)
+                });
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
+
+        completeSearch(place)
+
+    }
+
+    function completeSearch(place)
+    {
+        $.getJSON("api/GetRestaurants/" + place)
+            .done(function (data) { fillArray(data) })
+
+    }
 
     //Calls api controller to return data
     $(document).ready(function ()
     {
-          
-        
-        $.getJSON('api/GetRestaurants/detroit')       
-            .done(function (data){ fillArray(data) })
-        
-        
-    });
 
-   //Uses data from api controller to fill table
-    function fillArray(data, callback) {
-              
+
+        $.getJSON('api/GetRestaurants/detroit')
+            .done(function (data){ fillArray(data)}) 
+
+                var input = (document.getElementById('pac-input'));
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.bindTo('bounds', map);
+
+                autocomplete.addListener('place_changed', function(place){startSearch()});
+
+            });
+
+    //Uses data from api controller to fill table
+    function fillArray(data) {
+
         var k = 0;
         var lon = 0;
         var lat = 0;
         navigator.geolocation.getCurrentPosition( function(pos) {
-        lat = pos.coords.latitude;
-        lon = pos.coords.longitude;
+            lat = pos.coords.latitude;
+            lon = pos.coords.longitude;
         });
         var myLatLng = new google.maps.LatLng(data[0].Lat, data[0].Lon);
         var map =
@@ -245,7 +284,7 @@
         while (k < data.length)
         {
             var myLatLng = new google.maps.LatLng(data[k].Lat, data[k].Lon);
-            
+
             var marker = new google.maps.Marker({
                 position: myLatLng,
                 map: map,
@@ -268,19 +307,19 @@
         k = 0;
 
         //Fills in table data
-            document.getElementById("tbl").innerHTML =
-                '<tr>' +
-                '<th>Restaurant Name</th>' +
-                '<th>Restaurant Address</th>'+
-                '<th>Restaurant PhoneNumber</th>' +
-                '<th>Restaurant PriceLevel</th>' +
-                '<th>Restaurant Rating</th>'+
-                '<th>Restaurant Website</th>'+                                
-                '</tr>'
+        document.getElementById("tbl").innerHTML =
+            '<tr>' +
+            '<th>Restaurant Name</th>' +
+            '<th>Restaurant Address</th>'+
+            '<th>Restaurant PhoneNumber</th>' +
+            '<th>Restaurant PriceLevel</th>' +
+            '<th>Restaurant Rating</th>'+
+            '<th>Restaurant Website</th>'+
+            '</tr>'
 
-            while (k < data.length)
-            {
-            
+        while (k < data.length)
+        {
+
             document.getElementById("tbl").innerHTML +=
             '<tr>'
 
@@ -291,16 +330,16 @@
             + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
             + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
             + '<td id="' + k + 'w">' + '<a href="' + data[k].WebSite+ '">' + data[k].WebSite + '</td>'
-            + '<td>' + '<button id= "' + k + 'rem" class="btn btn-success"> Add to Favorites </button> </td>'  
+            + '<td>' + '<button id= "' + k + 'rem" class="btn btn-success"> Add to Favorites </button> </td>'
             + '</tr>';
-           
+
             k++;
-          
-           
+
+
         }
-        
-        
-        
+
+
+
     }
 
 
@@ -342,6 +381,6 @@
 
 
 
-   
+
 </script>
 
