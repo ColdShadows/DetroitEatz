@@ -204,5 +204,5 @@ function initMap(location) {
 }
 
 $(document).ready(function (location) {
-    navigator.geolocation.getCurrentPosition(initMap);
+    //navigator.geolocation.getCurrentPosition(initMap);
 });
