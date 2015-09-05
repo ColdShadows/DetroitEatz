@@ -125,12 +125,18 @@
     <input type="radio" name="type" id="changetype-geocode">
     <label for="changetype-geocode">Geocodes</label>
 </div>
-<div id="map"></div>
+
+
+
+<div id="map" class="col-md-6"></div>
+
+
 
     <div class="btn btn-success" id="toggle_traffic">Traffic</div>
     <div class="btn btn-danger" id="toggle_transit">Transit</div>
     <div class="btn btn-primary" id="toggle_bike">Biking</div>
 
+    <!---Table for Favorites-->
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -167,6 +173,11 @@
                         <td>
                             @favList[i].PlaceID
                         </td>
+                        <td>
+                            <button id="@i" class="btn btn-warning" onclick="RemoveFromFavorites()">
+                                Remove From Favorites
+                            </button>
+                        </td>
                     </tr>
 
                 }
@@ -177,55 +188,7 @@
 
     </div>
 }
-@{
-    List<Restaurant> tempList = new List<Restaurant>();
-    Restaurant r1 = new Restaurant();
-    r1.AddressNumber = "adr1";
-    r1.PlaceID = "plc1";
-    r1.Name = "r1";
 
-    Restaurant r2 = new Restaurant();
-    r2.AddressNumber = "adr2";
-    r2.PlaceID = "plc2";
-    r2.Name = "r2";
-
-    Restaurant r3 = new Restaurant();
-    r3.AddressNumber = "adr3";
-    r3.PlaceID = "plc3";
-    r3.Name = "r3";
-
-    tempList.Add(r1);
-    tempList.Add(r2);
-    tempList.Add(r3);
-}
-    
-
-    <!---Table for Favorites-->
-<table class="table">
-    @{int row = 0;}
-    @for (row = (tempList.Count - 1); row >= 0; row--)
-    {
-
-        <tr>
-            <td>
-                Row: @row
-            </td>
-            <td>
-                @tempList[row].AddressNumber
-            </td>
-            <td>
-                @tempList[row].PlaceID
-            </td>
-            <td>
-                <button id="@row" onclick="addToFav('@row')" class="btn btn-success">Add To Favorites</button>
-            </td>
-        </tr>
-    }
-    @{row = 0;}
-
-
-
-</table>
 
 
     <!--Table for Data-->
@@ -327,7 +290,8 @@
             + '<td id="' + k + 'pn">' + data[k].PhoneNumber + '</td>'
             + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
             + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
-            + '<td id="' + k + 'w">' + data[k].WebSite + '</td>'                    
+            + '<td id="' + k + 'w" a href="' + data[k].WebSite+ '">' + data[k].WebSite + '</td>'
+            + '<td>' + '<button id= "' + k + 'rem" class="btn btn-success"> Add to Favorites </button> </td>'  
             + '</tr>';
            
             k++;
