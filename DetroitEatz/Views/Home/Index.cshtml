@@ -128,12 +128,10 @@
 </div>
 <div id="map"></div>*@
 
+    <div class="btn btn-success" id="toggle_traffic">Traffic</div>
+    <div class="btn btn-danger" id="toggle_transit">Transit</div>
+    <div class="btn btn-primary" id="toggle_bike">Biking</div>
 
-<div id="panel">
-    <input style="border-color:black; color:white;background-color:blue" id="address" type="text" value="New Delhi">
-    <input style="border-color:black; color:white;background-color:blue" type="button" value="Search" onclick="test()">
-    <p id="product" />
-</div>
 
 @if (User.Identity.IsAuthenticated)
 {
