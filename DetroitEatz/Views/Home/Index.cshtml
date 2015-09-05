@@ -18,8 +18,73 @@
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
 </div>
+<!--Old Crap-->
+@*@if (Model != null)
+    {
+        int tblrow = 0;
 
- 
+        <div class="col-md-8">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PriceLevel)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AddressNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WebSite)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr id="@tblrow">
+                        <td>Table Row: tblrow</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PriceLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddressNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+                            @@Ajax.ActionLink("Add To Favorites")
+                    </td>
+<td a href="#">
+    @Html.DisplayFor(modelItem => item.WebSite)
+</td>
+                </tr>
+                tblrow++;
+
+            }
+
+        </table>
+    </div>
+
+}*@ 
+
+
+
+
 
 @*<link rel="stylesheet" href="~/Content/map.css" />
 
@@ -146,11 +211,12 @@
     tempList.Add(r2);
     tempList.Add(r3);
 }
-
+    <!--Table for Data-->
     <table id="tbl">
 
     </table>
 
+    <!---Table for Favorites-->
 <table class="table">
     @{int row = 0;}
     @for (row = (tempList.Count - 1); row >= 0; row--)
@@ -179,49 +245,6 @@
 
 
 
-<script type="text/javascript">
-
-    function addToFav(num) {
-
-
-
-        $(document).ready(function () {
-            @{
-            RestaurantContext db = new RestaurantContext();
-
-            Favorite fav = new Favorite();
-            fav.RestaurantName = tempList[row].Name;
-            fav.UserID = User.Identity.GetUserId();
-            fav.PlaceID = tempList[row].PlaceID;
-
-            db.Favorites.Add(fav);
-            db.SaveChangesAsync();
-
-            }
-        });
-    }
-
-</script>
-
-
-    <table>
-
-        <tr>
-            <td> Author </td>
-
-
-
-        </tr>
-
-
-
-    </table>
-
-
-
-
-
-
 <div id="map" class="col-md-8" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;">
 </div>
 @*@if (ViewBag.ValidRestaurants != null)
@@ -234,68 +257,7 @@
             }
         }
     }*@
-@if (Model != null)
-{
-    int tblrow = 0;
 
-    <div class="col-md-8">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PriceLevel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rating)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddressNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WebSite)
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr id="@tblrow">
-                    <td>Table Row: tblrow</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PriceLevel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rating)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddressNumber)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
-                        @*@Ajax.ActionLink("Add To Favorites")*@
-                    </td>
-                    <td a href="#">
-                        @Html.DisplayFor(modelItem => item.WebSite)
-                    </td>
-                </tr>
-                tblrow++;
-
-            }
-
-        </table>
-    </div>
-    
-}
 <script language="JavaScript" type="text/javascript">
     var restaurants = new Array();
    
@@ -312,60 +274,104 @@
           
         
         $.getJSON('api/GetRestaurants/detroit')
-            .done(function (data) { fillArray(data, function (dataArray) { AddToTable(dataArray) }) })
-        
+            //.done(function (data) { fillArray(data, function (dataArray) { AddToTable(dataArray) }) })
+        .done(function (data){ fillArray(data) })
         
         
     });
 
-   
-    function fillArray(data, callback)
-    {
-        var restaurant =
-         {
-             Name: "",
-             PhoneNumber: "",
-             PlaceID: "",
-             Rating: 0,
-             Website: ""
-         };
+   //Seperate
+    //function fillArray(data, callback)
+    //{
+    //    var restaurant =
+    //     {
+    //         Name: "",
+    //         PhoneNumber: "",
+    //         PlaceID: "",
+    //         Rating: 0,
+    //         Website: ""
+    //     };
 
-        var dataArray = new Array();
+    //    var dataArray = [];
+    //    //var tempArray = [];
+    //    //for (var k = 0; k < data.length; k++)
+    //    var k = 0;
+    //    //var j = 0;
 
-        //for (var k = 0; k < data.length; k++)
+    //    while( k < data.length)
+    //    {
+    //        var tempArray = [];
+            
+    //            restaurant.Name = data[k].Name;
+    //            restaurant.PhoneNumber = data[k].PhoneNumber;
+    //            restaurant.PlaceID = data[k].PlaceID;
+    //            restaurant.Rating = data[k].Rating;
+    //            k++;
+    //            //tempArray.push(restaurant);
+    //            dataArray.splice(k, 0, restaurant.valueOf());
+            
+            
+    //    }
+    //    restaurants = dataArray;
+    //    ////callback(AddToTable(dataArray));
+    //    AddToTable(dataArray);
+    //}
+
+
+
+    //Together
+    function fillArray(data, callback) {
+              
         var k = 0;
-        while( k < data.length)
-        {
-            restaurant.Name = data[k].Name;
-            restaurant.PhoneNumber = data[k].PhoneNumber;
-            restaurant.PlaceID = data[k].PlaceID;
-            restaurant.Rating = data[k].Rating;
 
-            dataArray.push(restaurant);
-            k++;
-        }
-        restaurants = dataArray;
-        callback(AddToTable(dataArray));
-    }
-    function AddToTable(dataArray) {
-        document.getElementById("tbl").innerHTML =
-            '<tr>' +
-            '<th>Restaurant Name</th>' +
-            '<th>Restaurant PlaceID</th>'
-        //for (var i = 0; i < dataArray.length; i++)
-        var i = 0;
-        while( i < dataArray.length)
-        {
-            document.getElementById("tbl").innerHTML += 
+            document.getElementById("tbl").innerHTML =
+                '<tr>' +
+                '<th>Restaurant Name</th>' +
+                '<th>Restaurant PlaceID</th>'
+
+            while (k < data.length)
+            {
+            
+            document.getElementById("tbl").innerHTML +=
             '<tr>'
-            + '<td>' + dataArray[i].Name + '</td>'
-            + '<td>' + dataArray[i].PlaceID + '</td>'
-
+            + '<td>' + data[k].Name + '</td>'
+            + '<td>' + data[k].PlaceID + '</td>'
+            + '<td>' + data[k].PhoneNumber + '</td>'
+            + '<td>' + data[k].Rating + '</td>'
 
             + '</tr>';
-            i++;
+           
+            k++;
+          
+           
         }
+        
+        
+        
     }
+
+
+
+    //seperate
+    //function AddToTable(dataArray) {
+    //    document.getElementById("tbl").innerHTML =
+    //        '<tr>' +
+    //        '<th>Restaurant Name</th>' +
+    //        '<th>Restaurant PlaceID</th>'
+    //    //for (var i = 0; i < dataArray.length; i++)
+    //    var i = 0;
+    //    while( i < dataArray.length)
+    //    {
+    //        document.getElementById("tbl").innerHTML += 
+    //        '<tr>'
+    //        + '<td>' + dataArray[i].Name + '</td>'
+    //        + '<td>' + dataArray[i].PlaceID + '</td>'
+
+
+    //        + '</tr>';
+    //        i++;
+    //    }
+    //}
 
 </script>
 

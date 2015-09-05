@@ -70,7 +70,7 @@ namespace DetroitEatz.Controllers
 
 
 
-                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + KevKey;
+                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + TravisKey;
 
                 string results = client.DownloadString(uri);
 
@@ -127,10 +127,10 @@ namespace DetroitEatz.Controllers
                 lon = coords.Longitude;
 
 
-                double radius = 500;
+                double radius = 50;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
 
-                uri += "key=" + KevKey + "&";
+                uri += "key=" + TravisKey + "&";
                 uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
                 uri += "radius=" + radius.ToString() + "&";
                 uri += "types=restaurant";
@@ -152,7 +152,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + KevKey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + TravisKey;
 
                             string details = client.DownloadString(detailUri);
 
@@ -189,7 +189,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + KevKey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + TravisKey;
 
                             string details = client.DownloadString(detailUri);
 

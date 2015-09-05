@@ -72,8 +72,8 @@ namespace DetroitEatz
             app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             {
                 
-                ClientId = KCI,
-                ClientSecret = KCS,
+                ClientId = TCI,
+                ClientSecret = TCS,
                 Provider= new GoogleOAuth2AuthenticationProvider()
             });
         }
