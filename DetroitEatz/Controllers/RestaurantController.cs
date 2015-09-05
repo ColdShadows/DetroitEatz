@@ -127,7 +127,7 @@ namespace DetroitEatz.Controllers
                 lon = coords.Longitude;
 
 
-                double radius = 50;
+                double radius = 250;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
 
                 uri += "key=" + TravisKey + "&";
@@ -169,7 +169,11 @@ namespace DetroitEatz.Controllers
                                         AddressNumber = detailresults.result.formatted_address,
                                         PhoneNumber = detailresults.result.formatted_phone_number,
                                         Rating = detailresults.result.rating.ToString(),
-                                        WebSite = detailresults.result.website
+                                        WebSite = detailresults.result.website,
+                                        Lat = detailresults.result.geometry.location.lat,
+                                        Lon = detailresults.result.geometry.location.lng,
+                                        PriceLevel = detailresults.result.price_level.ToString(),
+                                        OpenNow = detailresults.result.opening_hours.open_now
                                     });
 
                             }

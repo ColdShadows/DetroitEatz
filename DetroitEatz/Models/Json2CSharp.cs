@@ -91,6 +91,7 @@ namespace DetroitEatz.Models
         public int utc_offset { get; set; }
         public string vicinity { get; set; }
         public string website { get; set; }
+        public double price_level { get; set; }
     }
 
     public class RootObject

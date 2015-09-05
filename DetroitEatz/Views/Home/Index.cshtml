@@ -211,10 +211,7 @@
     tempList.Add(r2);
     tempList.Add(r3);
 }
-    <!--Table for Data-->
-    <table id="tbl">
-
-    </table>
+    
 
     <!---Table for Favorites-->
 <table class="table">
@@ -247,79 +244,29 @@
 
 <div id="map" class="col-md-8" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;">
 </div>
-@*@if (ViewBag.ValidRestaurants != null)
-    {
-        foreach (var r in ViewBag.ValidRestaurants)
-        {
-            foreach(var stuff in r)
-            {
-            <p>r.RestaurantName</p>
-            }
-        }
-    }*@
+
+
+    <!--Table for Data-->
+    <table id="tbl" class="table">
+
+    </table>
 
 <script language="JavaScript" type="text/javascript">
     var restaurants = new Array();
    
 
-    //$.ajax({
-    //    url: 'api/GetRestaurants/detroit',
-    //    type: 'GET',
-    //    data: { 'foo': 'bar' },
-
-    //});
-
+    //Calls api controller to return data
     $(document).ready(function ()
     {
           
         
-        $.getJSON('api/GetRestaurants/detroit')
-            //.done(function (data) { fillArray(data, function (dataArray) { AddToTable(dataArray) }) })
-        .done(function (data){ fillArray(data) })
+        $.getJSON('api/GetRestaurants/detroit')       
+            .done(function (data){ fillArray(data) })
         
         
     });
 
-   //Seperate
-    //function fillArray(data, callback)
-    //{
-    //    var restaurant =
-    //     {
-    //         Name: "",
-    //         PhoneNumber: "",
-    //         PlaceID: "",
-    //         Rating: 0,
-    //         Website: ""
-    //     };
-
-    //    var dataArray = [];
-    //    //var tempArray = [];
-    //    //for (var k = 0; k < data.length; k++)
-    //    var k = 0;
-    //    //var j = 0;
-
-    //    while( k < data.length)
-    //    {
-    //        var tempArray = [];
-            
-    //            restaurant.Name = data[k].Name;
-    //            restaurant.PhoneNumber = data[k].PhoneNumber;
-    //            restaurant.PlaceID = data[k].PlaceID;
-    //            restaurant.Rating = data[k].Rating;
-    //            k++;
-    //            //tempArray.push(restaurant);
-    //            dataArray.splice(k, 0, restaurant.valueOf());
-            
-            
-    //    }
-    //    restaurants = dataArray;
-    //    ////callback(AddToTable(dataArray));
-    //    AddToTable(dataArray);
-    //}
-
-
-
-    //Together
+   //Uses data from api controller to fill table
     function fillArray(data, callback) {
               
         var k = 0;
@@ -327,18 +274,28 @@
             document.getElementById("tbl").innerHTML =
                 '<tr>' +
                 '<th>Restaurant Name</th>' +
-                '<th>Restaurant PlaceID</th>'
+                '<th>Restaurant Address</th>'+
+                '<th>Restaurant PhoneNumber</th>' +
+                '<th>Restaurant PriceLevel</th>' +
+                '<th>Restaurant Rating</th>'+
+                '<th>Restaurant Website</th>'+
+                '<th>Restaurant OpenNow</th>'+                
+                '</tr>'
 
             while (k < data.length)
             {
             
             document.getElementById("tbl").innerHTML +=
             '<tr>'
-            + '<td>' + data[k].Name + '</td>'
-            + '<td>' + data[k].PlaceID + '</td>'
-            + '<td>' + data[k].PhoneNumber + '</td>'
-            + '<td>' + data[k].Rating + '</td>'
 
+            + '<td id="'+k+'id" style="display:none">' + data[k].PlaceID + '</td>'
+            + '<td id="' + k + 'n">' + data[k].Name + '</td>'
+            + '<td id="' + k + 'a">' + data[k].AddressNumber + '</td>'
+            + '<td id="' + k + 'pn">' + data[k].PhoneNumber + '</td>'
+            + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
+            + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
+            + '<td id="' + k + 'w">' + data[k].WebSite + '</td>'
+            + '<td id="' + k + 'on">' + data[k].OpenNow + '</td>'            
             + '</tr>';
            
             k++;
@@ -352,26 +309,6 @@
 
 
 
-    //seperate
-    //function AddToTable(dataArray) {
-    //    document.getElementById("tbl").innerHTML =
-    //        '<tr>' +
-    //        '<th>Restaurant Name</th>' +
-    //        '<th>Restaurant PlaceID</th>'
-    //    //for (var i = 0; i < dataArray.length; i++)
-    //    var i = 0;
-    //    while( i < dataArray.length)
-    //    {
-    //        document.getElementById("tbl").innerHTML += 
-    //        '<tr>'
-    //        + '<td>' + dataArray[i].Name + '</td>'
-    //        + '<td>' + dataArray[i].PlaceID + '</td>'
-
-
-    //        + '</tr>';
-    //        i++;
-    //    }
-    //}
-
+   
 </script>
 
