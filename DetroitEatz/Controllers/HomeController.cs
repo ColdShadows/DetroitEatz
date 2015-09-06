@@ -92,43 +92,21 @@ namespace DetroitEatz.Controllers
                 favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
                 ViewBag.Favorites = favorites;
 
-                return View(/*validRestaurants*/);
+                return View();
            
 
 
             
         }
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Index(List<Restaurant> restaurants)
-        //{
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
+         public ActionResult About()
+        {
 
-        //    foreach(Restaurant r in restaurants)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
+            return View();
+        }
+         public ActionResult ContactUs()
+         {
 
-        //    }
-
-
-        //    return View(validRestaurants);
-        //}
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddFavorite(List<Restaurant> restaurants)
-        //{
-
-        //    //db.Favorites.Add();
-
-        //    return RedirectToAction("Index");
-
-        //}
-
+             return View();
+         }
     }
 }

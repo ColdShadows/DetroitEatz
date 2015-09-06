@@ -12,12 +12,19 @@
 
     @Scripts.Render("~/bundles/modernizr")
 
+    <style>
+    #contact {
+        background-image:url('/Images/testcontactw.png');
+        
+    }
+    #contact:hover { background-image:url('/Images/testcontacto.png'); }
+    </style>
 </head>
 <body>
-    <form action="">
-        
-    </form>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+
+    <form action=""></form>
+    <div style="vertical-align:middle" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -27,16 +34,53 @@
                 </button>
                 @*@Html.ActionLink("Continue As Guest", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
-            <div class="navbar-collapse collapse">
-                @*<ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("About", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                </ul>*@
-                @Html.Partial("_LoginPartial")
+
+            
+
+            <div stlye="vertical-align:middle" class="navbar-collapse collapse">  
+                                
+                <ul class="nav navbar-nav">
+                    <li>                       
+
+                        <a href='@Url.Action("Index", "Home")'>
+                        <img width="75" height="75" src='@Url.Content("~/Images/detroiteatz_logo.png")' />
+                        </a>
+
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav">
+                    <li>
+
+                        <a style="vertical-align:middle" href='@Url.Action("Index", "Home")'>
+                            <img src='@Url.Content("~/Images/detextlogo-01.png")' />
+                        </a>
+
+                    </li>
+
+                    <li>
+                        <a href='@Url.Action("About", "Home")'>
+                            <img src='@Url.Content("~/Images/aboutw-01-01.png")' />
+                        </a>
+                    </li>             
+                    <li>
+                        <a href='@Url.Action("ContactUs", "Home")'>
+                            <img src='@Url.Content("~/Images/contactw.png")' />
+                        </a>
+                        </li>
+                    <li>
+                        @Html.Partial("_LoginPartial")
+                    </li>
+                  
+
+
+
+
+                </ul>                
+                @*@Html.Partial("_LoginPartial")*@
             </div>
-        </div>
+            </div>
     </div>
+    
     <div class="container body-content">
         @RenderBody()
         <hr />
@@ -44,11 +88,7 @@
             @*<p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>*@
         </footer>
     </div>
-    <center>
-        <div>
-            @Html.ActionLink("Continue As Guest", "Index", "Home", new { area = "" }, new { @align = "center", @class = "btn btn-success" })
-        </div>
-    </center>
+    
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
