@@ -14,7 +14,7 @@ function initMap(location) {
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
     map = new google.maps.Map(document.getElementById('map'), map);
-    
+
     //Create the auto-complete object and associate it with the UI input control.
     var input = /** @type {!HTMLInputElement} */(
         document.getElementById('pac-input'));
@@ -90,8 +90,8 @@ function initMap(location) {
             position: new google.maps.LatLng(location.coords.latitude, location.coords.longitude),
             map: map
         });
-    
-    
+
+
 
 
     //draw circle on map
@@ -157,7 +157,7 @@ function initMap(location) {
     }, callback);
 
     service = new google.maps.places.PlacesService(map);
-    
+
 
     //creating loop to get the markers for all the locations
     function callback(results, status) {

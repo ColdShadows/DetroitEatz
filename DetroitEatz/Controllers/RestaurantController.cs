@@ -21,9 +21,9 @@ namespace DetroitEatz.Controllers
 {
     public class RestaurantController : ApiController
     {
-        string mapkey = "AIzaSyDC6t7o26kX3LTfxraVFebdSXG-cF7wcGo";
-        string geokey = "AIzaSyBvYhRMHuDQUfyIv_HlVaMZXbxs8L5ZPko";
-
+        string TravisKey = "AIzaSyDC6t7o26kX3LTfxraVFebdSXG-cF7wcGo";
+        string KevKey = "AIzaSyA5_ZOFKsL19JZR2mDEKcEy6MB6CMwnKlg";
+        
         private RestaurantContext db = new RestaurantContext();
 
         //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
@@ -70,7 +70,7 @@ namespace DetroitEatz.Controllers
 
 
 
-                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + geokey;
+                string uri = "https://maps.googleapis.com/maps/api/geocode/json?address=" + searchPlace.ToString() + "&key=" + TravisKey;
 
                 string results = client.DownloadString(uri);
 
@@ -127,13 +127,17 @@ namespace DetroitEatz.Controllers
                 lon = coords.Longitude;
 
 
-                double radius = 500;
+                double radius = 250;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
-
-                uri += "key=" + mapkey + "&";
+                    //"https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
+                uri += "key=" + TravisKey + "&";
                 uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
                 uri += "radius=" + radius.ToString() + "&";
+                //uri += "rankby=distance&";
                 uri += "types=restaurant";
+                //uri += "&keyword=food";
+                //uri += "&name=''";
+                
 
                 string detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
 
@@ -152,7 +156,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + TravisKey;
 
                             string details = client.DownloadString(detailUri);
 
@@ -169,7 +173,11 @@ namespace DetroitEatz.Controllers
                                         AddressNumber = detailresults.result.formatted_address,
                                         PhoneNumber = detailresults.result.formatted_phone_number,
                                         Rating = detailresults.result.rating.ToString(),
-                                        WebSite = detailresults.result.website
+                                        WebSite = detailresults.result.website,
+                                        Lat = detailresults.result.geometry.location.lat,
+                                        Lon = detailresults.result.geometry.location.lng,
+                                        PriceLevel = detailresults.result.price_level.ToString()
+                                        
                                     });
 
                             }
@@ -189,7 +197,7 @@ namespace DetroitEatz.Controllers
                         if (placesresults.Status == "OK")
                         {
                             detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
-                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + mapkey;
+                            detailUri += "placeid=" + placesresults.Results[i].Place_Id + "&key=" + TravisKey;
 
                             string details = client.DownloadString(detailUri);
 
@@ -206,7 +214,11 @@ namespace DetroitEatz.Controllers
                                     AddressNumber = detailresults.result.formatted_address,
                                     PhoneNumber = detailresults.result.formatted_phone_number,
                                     Rating = detailresults.result.rating.ToString(),
-                                    WebSite = detailresults.result.website
+                                    WebSite = detailresults.result.website,
+                                    Lat = detailresults.result.geometry.location.lat,
+                                    Lon = detailresults.result.geometry.location.lng,                                                               
+                                    PriceLevel = detailresults.result.price_level.ToString()
+                                    
                                 });
 
                             }

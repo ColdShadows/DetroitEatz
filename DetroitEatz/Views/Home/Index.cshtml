@@ -7,7 +7,7 @@
    @Scripts.Render("~/bundles/jquery")
 @Scripts.Render("~/bundles/jqueryval")
 }
-<head accept="json">
+<head accept="text/html">
     <title></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
@@ -18,16 +18,83 @@
     <p>@ViewBag.userName</p>
     <p>@ViewBag.userID</p>
 </div>
- 
-@*<link rel="stylesheet" href="~/Content/map.css" />
+<!--Old Crap-->
+@*@if (Model != null)
+    {
+        int tblrow = 0;
 
-<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>
+        <div class="col-md-8">
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PriceLevel)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Rating)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.PhoneNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.AddressNumber)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.WebSite)
+                    </th>
+                </tr>
+
+                @foreach (var item in Model)
+                {
+                    <tr id="@tblrow">
+                        <td>Table Row: tblrow</td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PriceLevel)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Rating)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.AddressNumber)
+                        </td>
+                        <td>
+                            @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
+                            @@Ajax.ActionLink("Add To Favorites")
+                    </td>
+<td a href="#">
+    @Html.DisplayFor(modelItem => item.WebSite)
+</td>
+                </tr>
+                tblrow++;
+
+            }
+
+        </table>
+    </div>
+
+}*@ 
+
+
+
+
+
+<link rel="stylesheet" href="~/Content/map.css" />
+
+@*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>*@
+@*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>*@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
-<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>
-<script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>
-<script language="javascript" type="text/javascript" src="~/Scripts/search.js"></script>*@
+@*<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>*@
+@*<script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>*@
+
 
 
 <div class="page-header">
@@ -41,11 +108,10 @@
 </div>
 
 
-@*<small><a href="#" data-bind="click: $parent.test">Details</a></small>
-    <p data-bind="text: favoriteDetail"></p>*@
 
-@*<input id="pac-input" class="controls" type="text"
-       placeholder="Enter a location">
+ 
+<input id="pac-input" class="controls" type="text"
+       placeholder="Enter a location, or name of place">
 <div id="type-selector" class="controls">
     <input type="radio" name="type" id="changetype-all" checked="checked">
     <label for="changetype-all">All</label>
@@ -59,14 +125,18 @@
     <input type="radio" name="type" id="changetype-geocode">
     <label for="changetype-geocode">Geocodes</label>
 </div>
-<div id="map"></div>*@
 
 
-<div id="panel">
-    <input style="border-color:black; color:white;background-color:blue" id="address" type="text" value="New Delhi">
-    <input style="border-color:black; color:white;background-color:blue" type="button" value="Search" onclick="test()">
-    <p id="product" />
-</div>
+
+<div id="map" class="col-md-6"></div>
+
+
+
+    <div class="btn btn-success" id="toggle_traffic">Traffic</div>
+    <div class="btn btn-danger" id="toggle_transit">Transit</div>
+    <div class="btn btn-primary" id="toggle_bike">Biking</div>
+
+    <!---Table for Favorites-->
 
 @if (User.Identity.IsAuthenticated)
 {
@@ -92,18 +162,8 @@
                 {
 
 
-<div class="btn btn-success" id="toggle_traffic">Traffic</div>
-<div class="btn btn-danger" id="toggle_transit">Transit</div>
-<div class="btn btn-primary" id="toggle_bike">Biking</div>
 
 
-@*<div id="panel">        
-        <input id="address" type="text" value="">
-        <input type="button" value="Search" onclick="test()">
-        <p id="product" />
-    </div>
-    <div id="map" style="width: 1200px; height: 350px; border: 5px solid #5E5454;">
-    </div>*@
 
                     <tr>
                         <td>Row: @i</td>
@@ -112,6 +172,11 @@
                         </td>
                         <td>
                             @favList[i].PlaceID
+                        </td>
+                        <td>
+                            <button id="@i" class="btn btn-warning" onclick="RemoveFromFavorites()">
+                                Remove From Favorites
+                            </button>
                         </td>
                     </tr>
 
@@ -123,221 +188,199 @@
 
     </div>
 }
-@{
-    List<Restaurant> tempList = new List<Restaurant>();
-    Restaurant r1 = new Restaurant();
-    r1.AddressNumber = "adr1";
-    r1.PlaceID = "plc1";
-    r1.Name = "r1";
-
-    Restaurant r2 = new Restaurant();
-    r2.AddressNumber = "adr2";
-    r2.PlaceID = "plc2";
-    r2.Name = "r2";
-
-    Restaurant r3 = new Restaurant();
-    r3.AddressNumber = "adr3";
-    r3.PlaceID = "plc3";
-    r3.Name = "r3";
-
-    tempList.Add(r1);
-    tempList.Add(r2);
-    tempList.Add(r3);
-}
 
 
 
-<table class="table">
-    @{int row = 0;}
-    @for (row = (tempList.Count - 1); row >= 0; row--)
-    {
+    <!--Table for Data-->
+    <table id="tbl" class="table">
 
-        <tr>
-            <td>
-                Row: @row
-            </td>
-            <td>
-                @tempList[row].AddressNumber
-            </td>
-            <td>
-                @tempList[row].PlaceID
-            </td>
-            <td>
-                <button id="@row" onclick="addToFav('@row')" class="btn btn-success">Add To Favorites</button>
-            </td>
-        </tr>
-    }
-    @{row = 0;}
-
-
-
-</table>
-
-
-
-<script type="text/javascript">
-
-    function addToFav(num) {
-
-
-
-        $(document).ready(function () {
-            @{
-            RestaurantContext db = new RestaurantContext();
-
-            Favorite fav = new Favorite();
-            fav.RestaurantName = tempList[row].Name;
-            fav.UserID = User.Identity.GetUserId();
-            fav.PlaceID = tempList[row].PlaceID;
-
-           // db.Favorites.Add(fav);
-            db.SaveChangesAsync();
-
-            }
-        });
-    }
-
-</script>
-
-
-
-
-
-
-
-
-
-<div id="map" class="col-md-8" align="center" style="width: 600px; height: 400px; border: 5px solid #5E5454;">
-</div>
-@*@if (ViewBag.ValidRestaurants != null)
-    {
-        foreach (var r in ViewBag.ValidRestaurants)
-        {
-            foreach(var stuff in r)
-            {
-            <p>r.RestaurantName</p>
-            }
-        }
-    }*@
-@if (Model != null)
-{
-    int tblrow = 0;
-
-    <div class="col-md-8">
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PriceLevel)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Rating)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.AddressNumber)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.WebSite)
-                </th>
-            </tr>
-
-            @foreach (var item in Model)
-            {
-                <tr id="@tblrow">
-                    <td>Table Row: tblrow</td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PriceLevel)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Rating)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhoneNumber)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AddressNumber)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
-                        @*@Ajax.ActionLink("Add To Favorites")*@
-                    </td>
-                    <td a href="#">
-                        @Html.DisplayFor(modelItem => item.WebSite)
-                    </td>
-                </tr>
-                tblrow++;
-
-            }
-
-        </table>
-    </div>
-    
-
-
-}
-
+    </table>
 
 <script language="JavaScript" type="text/javascript">
 
-   
+    //Handles the search box input
+    function startSearch()
+    {
+        var input = (document.getElementById('pac-input'));
+                
+            infowindow.open();
+            marker.setVisible(false);
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                window.alert("Autocomplete's returned place contains no geometry");
+                return;
+            }
+            if (place.geometry.viewport) {
+                map.fitBounds(place.geometry.viewport);
+            }
+            else {
+                map.setCenter(place.geometry.location);
+                map.setZoom(17);  // Why 17? Because it looks good.
+            }
+            marker.setIcon(
+                {
+                    url: place.icon,
+                    size: new google.maps.Size(71, 71),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(17, 34),
+                    scaledSize: new google.maps.Size(35, 35)
+                });
+            marker.setPosition(place.geometry.location);
+            marker.setVisible(true);
 
-    //$.ajax({
-    //    url: 'api/GetRestaurants/detroit',
-    //    type: 'GET',
-    //    data: { 'foo': 'bar' },
+        completeSearch(place)
 
-    //});
+    }
 
+    function completeSearch(place)
+    {
+        $.getJSON("api/GetRestaurants/" + place)
+            .done(function (data) { fillArray(data) })
+
+    }
+
+    //Calls api controller to return data
     $(document).ready(function ()
     {
+
+
         $.getJSON('api/GetRestaurants/detroit')
-        .done(function (data)
+            .done(function (data){ fillArray(data)}) 
+
+                var input = (document.getElementById('pac-input'));
+                var autocomplete = new google.maps.places.Autocomplete(input);
+                autocomplete.bindTo('bounds', map);
+
+                autocomplete.addListener('place_changed', function(place){startSearch()});
+
+            });
+
+    //Uses data from api controller to fill table
+    function fillArray(data) {
+
+        var k = 0;
+        var lon = 0;
+        var lat = 0;
+        navigator.geolocation.getCurrentPosition( function(pos) {
+            lat = pos.coords.latitude;
+            lon = pos.coords.longitude;
+        });
+        var myLatLng = new google.maps.LatLng(data[0].Lat, data[0].Lon);
+        var map =
         {
-            $.each(data, function (key, item)
-            {
-                $('<li>', {text: formatItem(item)}).appendTo($('#'))
-            })
-        })
+            //getting current locations using coordinates
+            //center: new google.maps.LatLng(lat,lon),
+            center: myLatLng,
+            zoom: 17,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        map = new google.maps.Map(document.getElementById('map'), map);
+        var infowindow = new google.maps.InfoWindow({
+            map:map,
+            maxWidth: 350
+        });
+
+        //Markers on map
+        while (k < data.length)
+        {
+            var myLatLng = new google.maps.LatLng(data[k].Lat, data[k].Lon);
+
+            var marker = new google.maps.Marker({
+                position: myLatLng,
+                map: map,
+                icon: '/Images/rest.png',
+                animation: google.maps.Animation.DROP
+            });
+
+
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.setContent(place.name);
+                infowindow.open(map, this);
+            });
+
+
+            k++;
+
+
+        }
+
+        k = 0;
+
+        //Fills in table data
+        document.getElementById("tbl").innerHTML =
+            '<tr>' +
+            '<th>Restaurant Name</th>' +
+            '<th>Restaurant Address</th>'+
+            '<th>Restaurant PhoneNumber</th>' +
+            '<th>Restaurant PriceLevel</th>' +
+            '<th>Restaurant Rating</th>'+
+            '<th>Restaurant Website</th>'+
+            '</tr>'
+
+        while (k < data.length)
+        {
+
+            document.getElementById("tbl").innerHTML +=
+            '<tr>'
+
+            + '<td id="'+k+'id" style="display:none">' + data[k].PlaceID + '</td>'
+            + '<td id="' + k + 'n">' + data[k].Name + '</td>'
+            + '<td id="' + k + 'a">' + data[k].AddressNumber + '</td>'
+            + '<td id="' + k + 'pn">' + data[k].PhoneNumber + '</td>'
+            + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
+            + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
+            + '<td id="' + k + 'w">' + '<a href="' + data[k].WebSite+ '">' + data[k].WebSite + '</td>'
+            + '<td>' + '<button id= "' + k + 'rem" class="btn btn-success"> Add to Favorites </button> </td>'
+            + '</tr>';
+
+            k++;
+
+
+        }
+
+
+
+    }
+
+
+
+    //Functions for Map Buttons
+
+    //trafficLayer
+    var trafficLayer = new google.maps.TrafficLayer();
+    $('#toggle_traffic').click(function () {
+        if (trafficLayer.getMap()) {
+            trafficLayer.setMap(null);
+        }
+        else {
+            trafficLayer.setMap(map);
+        }
     });
-    
-    //$(document).ready(function () {
-    //    // Send an AJAX request
-    //    $.getJSON(apiUrl)
-    //        .done(function (data) {
-    //            // On success, 'data' contains a list of products.
-    //            $.each(data, function (key, item) {
-    //                // Add a list item for the product.
-    //                $('<li>', { text: formatItem(item) }).appendTo($('#products'));
-    //            });
-    //        });
-    //});
+
+    //transitLayer
+    var transitLayer = new google.maps.TransitLayer();
+    $('#toggle_transit').click(function () {
+        if (transitLayer.getMap()) {
+            transitLayer.setMap(null);
+        }
+        else {
+            transitLayer.setMap(map);
+        }
+    });
+
+    //bikeLayer
+    var bikeLayer = new google.maps.BicyclingLayer();
+    $('#toggle_bike').click(function () {
+        if (bikeLayer.getMap()) {
+            bikeLayer.setMap(null);
+        }
+        else {
+            bikeLayer.setMap(map);
+        }
+    });
+
+
+
 
 </script>
 
-    <nav>
-        <ul class="pagination">
-            <li>
-                <a href="#" aria-label="Previous">
-                    <span aria-hidden="true">&laquo;</span>
-                </a>
-            </li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">4</a></li>
-            <li><a href="#">5</a></li>
-            <li>
-                <a href="#" aria-label="Next">
-                    <span aria-hidden="true">&raquo;</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
