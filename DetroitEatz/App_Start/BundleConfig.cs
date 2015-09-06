@@ -27,7 +27,7 @@ namespace DetroitEatz
                       "~/Content/bootstrap.css",
                       "~/Content/bootstrap-social.css",
                       "~/Content/css/font-awesome.css",
-                      "~/Content/site.css"
+                      "~/Content/site.css", "~/Content/cerulean.css"
                       ));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(

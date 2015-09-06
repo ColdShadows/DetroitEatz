@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Contact";
+}
+
+<h2>Contact</h2>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div>
+        <form action="contact.php" method="post">
+            Your name<br>
+            <input type="text" name="cf_name"><br>
+            Your e-mail<br>
+            <input type="text" name="cf_email"><br>
+            Message<br>
+            @*<textarea name="cf_message">
+                <br>*@
+                <input type="submit" value="Send">
+                <input type="reset" value="Clear">
+        </form>
+    </div>
+</body>
+</html>
+
