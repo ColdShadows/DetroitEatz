@@ -208,58 +208,17 @@
 </body>
 <script language="JavaScript" type="text/javascript">
 
-    //Handles the search box input
-    function GstartSearch() {
-        var input = (document.getElementById('search'));
-
-        infowindow.open();
-        marker.setVisible(false);
-        var place = searchBox.getPlace();
-        if (!place.geometry) {
-            window.alert("Autocomplete's returned place contains no geometry");
-            return;
-        }
-        if (place.geometry.viewport) {
-            map.fitBounds(place.geometry.viewport);
-        }
-        else {
-            map.setCenter(place.geometry.location);
-            map.setZoom(17);  // Why 17? Because it looks good.
-        }
-        marker.setIcon(
-            {
-                url: place.icon,
-                size: new google.maps.Size(71, 71),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(17, 34),
-                scaledSize: new google.maps.Size(35, 35)
-            });
-        marker.setPosition(place.geometry.location);
-        marker.setVisible(true);
-
-        GcompleteSearch(place)
-
-    }
-
-    function GcompleteSearch(place) {
-        $.getJSON("api/GetRestaurants/" + place)
-            .done(function (data) { fillArray(data) })
-
-    }
-
+    
     //Calls api controller to return data
     $(document).ready(function () {
 
         //Load Table Initial Data
         $.getJSON('api/GetRestaurants/detroit')
-            .done(function (data) { fillArray(data) })
-
-        initAutocomplete();
+            .done(function (data) { fillArray(data) })        
 
         //Set Up Search Button/Map
-
-       //searchBox.bindTo('bounds', map);
-        //searchBox.addListener('place_changed', function (place) { GstartSearch() });
+        initAutocomplete();
+     
         
     });
 
@@ -399,12 +358,7 @@
 
     //Google search
     function initAutocomplete() {
-        //var map = new google.maps.Map(document.getElementById('map'), {
-        //    center: { lat: -33.8688, lng: 151.2195 },
-        //    zoom: 13,
-        //    mapTypeId: google.maps.MapTypeId.ROADMAP
-        //});
-
+        
         // Create the search box and link it to the UI element.
         var input = document.getElementById('search');
         var searchBox = new google.maps.places.SearchBox(input);
