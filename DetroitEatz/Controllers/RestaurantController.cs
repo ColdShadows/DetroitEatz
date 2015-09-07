@@ -26,23 +26,7 @@ namespace DetroitEatz.Controllers
         
         private RestaurantContext db = new RestaurantContext();
 
-        //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
-        // {
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
-
-        //    foreach(Restaurant r in restaurants)
-        //        if(ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
-
-
-
-
-
-        //    return (validRestaurants);
-        // }
-
+       
         //Coordinate
         public struct Coordinate
         {
