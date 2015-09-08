@@ -16,7 +16,10 @@ namespace DetroitEatz.Models
         public string UserID { get; set; }
         public string PlaceID { get; set; }
         public string RestaurantName { get; set; }
-
-        public virtual ICollection<Restaurant> FavoriteRestaurants { get; set; }
+        public string PhoneNumber { get; set; }
+        public string Address { get; set; }
+        public double Lat { get; set; }
+        public double Lon { get; set; }
+       
     }
 }

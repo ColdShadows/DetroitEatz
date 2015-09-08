@@ -15,216 +15,133 @@
     <br />
     <br />
     <br />
-
-
-
-    <div>
-        <p>@ViewBag.userName</p>
-        <p>@ViewBag.userID</p>
-    </div>
-    <!--Old Crap-->
-    @*@if (Model != null)
-            {
-                int tblrow = 0;
-
-                <div class="col-md-8">
-                    <table class="table">
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Name)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PriceLevel)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Rating)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.PhoneNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.AddressNumber)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.WebSite)
-                            </th>
-                        </tr>
-
-                        @foreach (var item in Model)
-                        {
-                            <tr id="@tblrow">
-                                <td>Table Row: tblrow</td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Name)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PriceLevel)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Rating)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.PhoneNumber)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.AddressNumber)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Home", "Index", new { id = item.PlaceID })
-                                    @@Ajax.ActionLink("Add To Favorites")
-                            </td>
-        <td a href="#">
-            @Html.DisplayFor(modelItem => item.WebSite)
-        </td>
-                        </tr>
-                        tblrow++;
-
-                    }
-
-                </table>
-            </div>
-
-        }*@
-
-
-
-
+    
 
     <link rel="stylesheet" href="~/Content/map.css" />
-
-    @*<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.1/jquery-ui.min.js"></script>*@
-    @*<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8zRwFNqp9g9Ca1uU2W6D4QQtOG00tPkY"></script>*@
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places,visualization&sensor=false"></script>
-    @*<script src="https://maps.googleapis.com/maps/api/js?signed_in=true&libraries=places&callback=initMap" async defer></script>*@
-    @*<script language="javascript" type="text/javascript" src="~/Scripts/maps.js"></script>*@
-
-
-
-   
-
-        @*<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>*@
-        @*<div align="center" class="page-header">
-
-        <h2>
-           <img height="100" width="400" src="~/Images/detextlogo-01.png" />
-        </h2>
-    </div>*@
-
 
     <!--Text box /search button method-->
-    
-    
-        <input class="input-lg" type="text" id="search" placeholder="Enter a location by name" />
-        <button class="btn btn-default" onclick="Tsearch()">Search</button>    
+
+
+    <input class="input-lg" type="text" id="search" placeholder="Enter a location by name" />
+    <button class="btn btn-default" onclick="Tsearch()">Search</button>
+
+    <input type="radio" name="radius" value="250" checked />250 M
+    <input type="radio" name="radius" value="500" />500 M
+    <input type="radio" name="radius" value="750" />750 M
     <br />
+       
+    <div id="map" style="align-self:center" class="md-8"></div>
+    
+        
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="col-md-12">
+            <table class="table" id="favoritesList"></table>
+        </div>
 
-
-    <!--Google Text Box And Radio Buttons-->
-        @*<input id="pac-input" class="controls" type="text"
-               placeholder="Enter a location, or name of place">*@
-
-
-        @*<div id="type-selector" class="controls">
-            <input type="radio" name="type" id="changetype-all" checked="checked">
-            <label for="changetype-all">All</label>
-
-            <input type="radio" name="type" id="changetype-restaurant">
-            <label for="changetype-restaurant">Restaurants</label>
-
-            <input type="radio" name="type" id="changetype-address">
-            <label for="changetype-address">Addresses</label>
-
-            <input type="radio" name="type" id="changetype-geocode">
-            <label for="changetype-geocode">Geocodes</label>
-        </div>*@
-
-
-
-        <div id="map"></div>
-
-
-
-        <div class="btn btn-success" id="toggle_traffic">Traffic</div>
-        <div class="btn btn-danger" id="toggle_transit">Transit</div>
-        <div class="btn btn-primary" id="toggle_bike">Biking</div>
-
-        <!---Table for Favorites-->
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div align="left" class="col-md-4">
-                <table class="table">
-                    <tr>
-                        <th>
-                            Restaurant Name
-                        </th>
-                        <th>
-                            Restaurant Address
-                        </th>
-                    </tr>
-                    @if (ViewBag.Favorites != null)
-                    {
-                        List<Favorite> favList = new List<Favorite>();
-                        foreach (Favorite f in ViewBag.Favorites)
-                        {
-
-                            favList.Add(f);
-                        }
-                        for (int i = 0; i < favList.Count; i++)
-                        {
-
-
-
-
-
-                            <tr>
-                                <td>Row: @i</td>
-                                <td>
-                                    @favList[i].RestaurantName
-                                </td>
-                                <td>
-                                    @favList[i].PlaceID
-                                </td>
-                                <td>
-                                    <button id="@i" class="btn btn-warning" onclick="RemoveFromFavorites()">
-                                        Remove From Favorites
-                                    </button>
-                                </td>
-                            </tr>
-
-                        }
-                    }
-                </table>
-
-
-
-            </div>
-        }
-
-
-
-        <!--Table for Data-->
+    }
+    <div class="col-md-12">
         <table id="tbl" class="table"></table>
+    </div>
+
+    
+
+    <div class="btn btn-success" id="toggle_traffic">Traffic</div>
+    <div class="btn btn-danger" id="toggle_transit">Transit</div>
+    <div class="btn btn-primary" id="toggle_bike">Biking</div>
+
+    <!---Table for Favorites-->
+    
+
+
+
+    <!--Table for Data-->
+    
 </body>
+
 <script language="JavaScript" type="text/javascript">
 
-    
+    //Global Restaurants list
+    var Restaurants= [];
+    var Favorites = [];
     //Calls api controller to return data
     $(document).ready(function () {
 
         //Load Table Initial Data
-        $.getJSON('api/GetRestaurants/detroit')
-            .done(function (data) { fillArray(data) })        
+        $.getJSON('api/GetRestaurants/detroit/100')
+            .done(function (data) { fillArray(data) })
+
+        //Load Favorites
+        var authorized = @User.Identity.IsAuthenticated.ToString().ToLower();
+        if(authorized)
+        {
+            $.getJSON('api/GetFavorites')
+            .done(function (data) { fillFavorites(data) })
+
+        }
+
 
         //Set Up Search Button/Map
         initAutocomplete();
-     
-        
+
+       
     });
+
+
+    //Check if restaurant is already in favorites
+    function checkFavorites(favIndex)
+    {
+        var r = 0;
+        var isalreadyfav = 0;
+        while(r < Restaurants.length)
+        {
+            if( Restaurants[r].PlaceID == Favorites[favIndex] )
+            {
+                isalreadyfav++;
+            }
+            r++;
+        }
+
+        if(isalreadyfav > 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    //Fills Favorites table
+    function fillFavorites(data)
+    {
+        Favorites = data;
+        var f = 0;
+        document.getElementById("favoritesList").innerHTML=
+            '<tr>'        
+        + '<th>Restaurant Name</th>'
+        + '<th>Address</th>'
+        + '<th>Phone Number</th>'
+        +'</tr>'
+        
+        while(f < data.length)
+        {
+            document.getElementById("favoritesList").innerHTML +=
+               
+              '<td>' + data[f].RestaurantName + '<td>'
+            +   '<td>' + data[f].Address + '<td>'
+            +   '<td>' + data[f].PhoneNumber + '<td>'
+            +   '<td> <button class="btn btn-warning" id="' + f + 'fav" value="' + f +'" onclick="RemoveFromFavorites('+f+')">Remove</button> <td>'
+            f++;
+        }
+        document.getElementById("favoritesList").innerHTML += '</tr>';
+
+    }
 
     //Uses data from api controller to fill table
     function fillArray(data) {
-
+        Restaurants = data;
         var k = 0;
         var lon = 0;
         var lat = 0;
@@ -273,6 +190,8 @@
         k = 0;
 
         //Fills in table data
+
+
         document.getElementById("tbl").innerHTML =
             '<tr>' +
             '<th>Restaurant Name</th>' +
@@ -284,9 +203,9 @@
             '</tr>'
 
         while (k < data.length) {
-
+            var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
             document.getElementById("tbl").innerHTML +=
-            '<tr>'
+            '<tr id="' + k +'row">'
 
             + '<td id="' + k + 'id" style="display:none">' + data[k].PlaceID + '</td>'
             + '<td id="' + k + 'n">' + data[k].Name + '</td>'
@@ -295,8 +214,16 @@
             + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
             + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
             + '<td id="' + k + 'w">' + '<a href="' + data[k].WebSite + '">' + data[k].WebSite + '</td>'
-            + '<td>' + '<button id= "' + k + '" class="btn btn-success"> Add to Favorites </button> </td>'
-            + '</tr>';
+            var exists = checkFavorites(k);
+            if(!exists){
+                var row =  document.getElementById(k +"row");
+                var x = row.insertCell();
+                x.innerHTML = "<button id ='" + k + "' class='btn btn-success' onclick='AddToFavorites(this.id)'> Add To Favorites </button>";
+            }
+            else
+            {
+                document.getElementById("tbl").innerHTML += '</tr>';
+            }
 
             k++;
 
@@ -348,9 +275,14 @@
     function Tsearch()
     {
         var input = $("#search").val();
-
+        if($('input[type="radio"][value="250"]').is(':checked'))
+            var rad = 250;
+        else if ($('input[type="radio"][value="500"]').is(':checked'))
+            var rad = 500;
+        if ($('input[type="radio"][value="750"]').is(':checked'))
+            var rad = 750;
         //if(input != "")
-        $.getJSON("api/GetRestaurants/" + input)
+        $.getJSON("api/GetRestaurants/" + input + "/" + rad )
             .done(function (data) { fillArray(data) })
 
     }
@@ -358,7 +290,7 @@
 
     //Google search
     function initAutocomplete() {
-        
+
         // Create the search box and link it to the UI element.
         var input = document.getElementById('search');
         var searchBox = new google.maps.places.SearchBox(input);
@@ -415,6 +347,59 @@
         });
     }
 
+
+    //Add to favorites button
+    function  AddToFavorites(buttonID)
+    {
+        var cleanRestaurant =
+            {
+                Name : Restaurants[buttonID].Name,
+                PlaceID : Restaurants[buttonID].PlaceID,
+                Lat : Restaurants[buttonID].Lat,
+                Lon : Restaurants[buttonID].Lon,
+                Phonenumber : Restaurants[buttonID].PhoneNumber,
+                AddressNumber : Restaurants[buttonID].AddressNumber
+            };
+        //var k = cleanRestaurant.toJSON();
+        $.ajax(
+            {
+                url:'api/AddToFavorites' ,
+                type: 'POST',
+                dataType: 'json',                
+                contentType: 'application/json',
+                data: JSON.stringify(cleanRestaurant),
+                
+            }).done(function(){$.getJSON('api/GetFavorites',function (data) { fillFavorites(data) } )})
+
+        
+            
+       
+    }
+
+
+    //Remove From Favorites Button
+    function RemoveFromFavorites(btnID)
+    {
+        var deleteFav =
+            {
+                UserID : Favorites[btnID].UserID,
+                PlaceID: Favorites[btnID].PlaceID
+            };
+        //var k = cleanRestaurant.toJSON();
+        $.ajax(
+            {
+                url:'api/RemoveFromFavorites' ,
+                type: 'POST',
+                dataType: 'json',                
+                contentType: 'application/json',
+                data: JSON.stringify(deleteFav),
+                
+            }).done(function(){$.getJSON('api/GetFavorites', function (data) { fillFavorites(data) })});
+
+        
+           
+
+    }
 
 </script>
 

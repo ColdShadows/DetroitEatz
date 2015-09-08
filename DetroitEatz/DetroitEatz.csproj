@@ -218,6 +218,18 @@
     <Compile Include="Migrations\201509061945265_current1.Designer.cs">
       <DependentUpon>201509061945265_current1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509071726378_Favorite.cs" />
+    <Compile Include="Migrations\201509071726378_Favorite.Designer.cs">
+      <DependentUpon>201509071726378_Favorite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509081447164_favoritedetails.cs" />
+    <Compile Include="Migrations\201509081447164_favoritedetails.Designer.cs">
+      <DependentUpon>201509081447164_favoritedetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509081452278_finalfavorites.cs" />
+    <Compile Include="Migrations\201509081452278_finalfavorites.Designer.cs">
+      <DependentUpon>201509081452278_finalfavorites.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailResults.cs" />
@@ -246,6 +258,7 @@
     <Content Include="Content\Site.css" />
     <Content Include="Images\abouto-01-01.png" />
     <Content Include="Images\aboutw-01-01.png" />
+    <Content Include="Images\aboutw-01.png" />
     <Content Include="Images\contacto.png" />
     <Content Include="Images\contactw.png" />
     <Content Include="Images\detextlogo-01.png" />
@@ -355,6 +368,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509061945265_current1.resx">
       <DependentUpon>201509061945265_current1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509071726378_Favorite.resx">
+      <DependentUpon>201509071726378_Favorite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509081447164_favoritedetails.resx">
+      <DependentUpon>201509081447164_favoritedetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509081452278_finalfavorites.resx">
+      <DependentUpon>201509081452278_finalfavorites.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

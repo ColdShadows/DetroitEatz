@@ -87,10 +87,10 @@ namespace DetroitEatz.Controllers
 
             //Create List of Fake Favorites
 
-                var favorites = new List<Favorite>();
-                favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
-                favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
-                ViewBag.Favorites = favorites;
+                //var favorites = new List<Favorite>();
+                //favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
+                //favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
+                //ViewBag.Favorites = favorites;
 
                 return View();
            
