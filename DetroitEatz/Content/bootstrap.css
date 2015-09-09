@@ -210,6 +210,7 @@ th {
   a,
   a:visited {
     text-decoration: underline;
+    
   }
   a[href]:after {
     content: " (" attr(href) ")";
@@ -1090,8 +1091,9 @@ body {
   font-family: "Source Sans Pro", Calibri, Candara, Arial, sans-serif;
   font-size: 15px;
   line-height: 1.42857143;
-  color: #333333;
-  background-color: #ffffff;
+  color: #000;
+  background-color: #273995;  
+  
 }
 input,
 button,
@@ -1102,12 +1104,12 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #2780e3;
+  color: #050c62;
   text-decoration: none;
 }
 a:hover,
 a:focus {
-  color: #165ba8;
+  color: #ff7106;
   text-decoration: underline;
 }
 a:focus {
@@ -3059,7 +3061,7 @@ fieldset[disabled] .btn {
 }
 a.btn.disabled,
 fieldset[disabled] a.btn {
-  pointer-events: none;
+    pointer-events: none;
 }
 .btn-default {
   color: #ffffff;

@@ -11,7 +11,7 @@
     <title></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 </head>
-<body class="body">
+
     <br />
     <br />
     <br />
@@ -58,7 +58,7 @@
 
     <!--Table for Data-->
     
-</body>
+
 
 <script language="JavaScript" type="text/javascript">
 
@@ -96,7 +96,7 @@
         var isalreadyfav = 0;
         while(r < Restaurants.length)
         {
-            if( Restaurants[r].PlaceID == Favorites[favIndex] )
+            if( Restaurants[r].PlaceID == Favorites[favIndex].PlaceID )
             {
                 isalreadyfav++;
             }
@@ -214,16 +214,21 @@
             + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
             + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
             + '<td id="' + k + 'w">' + '<a href="' + data[k].WebSite + '">' + data[k].WebSite + '</td>'
-            var exists = checkFavorites(k);
-            if(!exists){
+            //checkFavorites(k, function(data)
+            //{
+                if(isAuthenticated){
                 var row =  document.getElementById(k +"row");
                 var x = row.insertCell();
                 x.innerHTML = "<button id ='" + k + "' class='btn btn-success' onclick='AddToFavorites(this.id)'> Add To Favorites </button>";
-            }
-            else
-            {
-                document.getElementById("tbl").innerHTML += '</tr>';
-            }
+                }
+                else
+                {
+                    document.getElementById("tbl").innerHTML += '</tr>';
+                }
+                //});
+            
+                
+           
 
             k++;
 
