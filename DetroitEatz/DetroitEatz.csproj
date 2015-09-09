@@ -259,13 +259,11 @@
     <Content Include="Images\abouto-01-01.png" />
     <Content Include="Images\aboutw-01-01.png" />
     <Content Include="Images\aboutw-01.png" />
-    <Content Include="Images\backgroundpattern.png" />
     <Content Include="Images\contacto.png" />
     <Content Include="Images\contactw.png" />
     <Content Include="Images\detextlogo-01.png" />
     <Content Include="Images\detroiteatz_logo.png" />
     <Content Include="Images\iconmap.png" />
-    <Content Include="Images\inversepattern.png" />
     <Content Include="Images\logino-01-01.png" />
     <Content Include="Images\loginw-01-01.png" />
     <Content Include="Images\rego-01-01.png" />

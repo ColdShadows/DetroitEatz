@@ -1090,6 +1090,7 @@ html {
 body {
   font-family: "Source Sans Pro", Calibri, Candara, Arial, sans-serif;
   font-size: 15px;
+  font-weight: bold;
   line-height: 1.42857143;
   color: #000;
   background-color: #273995;  
