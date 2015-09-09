@@ -1,0 +1,47 @@
+﻿/*<style type="text/css">*/
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th {
+        padding: 10px;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    tr {
+        text-align: center;
+    }
+
+    /*td {
+        padding: 10px;
+    }*/
+
+    table,  th {
+        border: 1px solid #ffffff;
+    }
+
+     table,  td {
+        border: 1px solid #00ff21;
+    }
+
+    th {
+        background-color: #1967be;
+        color: white;
+    }
+
+    body {
+        margin: 50px;
+    }
+
+    .table-hover tbody tr:hover td {
+        background-color: #ff6a00;
+    }
+
+    .table-hover tbody tr:hover td {
+        background-color: #ff6a00;
+        color: #0026ff;
+    }
+/*</style>*/

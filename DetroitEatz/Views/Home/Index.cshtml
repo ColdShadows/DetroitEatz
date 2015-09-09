@@ -10,8 +10,19 @@
 <head accept="text/html">
     <title></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+    <script src="Scripts/jquery-1.4.1.min.js" type="text/javascript"></script>
+
+    <link href="Bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+
+    <script src="Bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+
+
 </head>
+
 <body class="body">
+
+
     <br />
     <br />
     <br />
@@ -87,8 +98,8 @@
         }*@
 
 
-
-
+   
+    <link rel="stylesheet" href="~/Content/css/IndexPage.css" />
 
     <link rel="stylesheet" href="~/Content/map.css" />
 
@@ -101,31 +112,31 @@
 
 
 
-   
 
-        @*<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>*@
-        @*<div align="center" class="page-header">
 
-        <h2>
-           <img height="100" width="400" src="~/Images/detextlogo-01.png" />
-        </h2>
-    </div>*@
+    @*<script src="https://maps.googleapis.com/maps/api/js?libraries=places" type="text/javascript"></script>*@
+    @*<div align="center" class="page-header">
+
+            <h2>
+               <img height="100" width="400" src="~/Images/detextlogo-01.png" />
+            </h2>
+        </div>*@
 
 
     <!--Text box /search button method-->
-    
-    
-        <input class="input-lg" type="text" id="search" placeholder="Enter a location by name" />
-        <button class="btn btn-default" onclick="Tsearch()">Search</button>    
+
+
+    <input class="input-lg" type="text" id="search" placeholder="Enter a location by name" />
+    <button class="btn btn-default" onclick="Tsearch()">Search</button>
     <br />
 
 
     <!--Google Text Box And Radio Buttons-->
-        @*<input id="pac-input" class="controls" type="text"
-               placeholder="Enter a location, or name of place">*@
+    @*<input id="pac-input" class="controls" type="text"
+        placeholder="Enter a location, or name of place">*@
 
 
-        @*<div id="type-selector" class="controls">
+    @*<div id="type-selector" class="controls">
             <input type="radio" name="type" id="changetype-all" checked="checked">
             <label for="changetype-all">All</label>
 
@@ -141,85 +152,86 @@
 
 
 
-        <div id="map"></div>
+    <div id="map"></div>
 
 
 
-        <div class="btn btn-success" id="toggle_traffic">Traffic</div>
-        <div class="btn btn-danger" id="toggle_transit">Transit</div>
-        <div class="btn btn-primary" id="toggle_bike">Biking</div>
+    <div class="btn btn-success" id="toggle_traffic">Traffic</div>
+    <div class="btn btn-danger" id="toggle_transit">Transit</div>
+    <div class="btn btn-primary" id="toggle_bike">Biking</div>
 
-        <!---Table for Favorites-->
-        @if (User.Identity.IsAuthenticated)
-        {
-            <div align="left" class="col-md-4">
-                <table class="table">
-                    <tr>
-                        <th>
-                            Restaurant Name
-                        </th>
-                        <th>
-                            Restaurant Address
-                        </th>
-                    </tr>
-                    @if (ViewBag.Favorites != null)
+    <!---Table for Favorites-->
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div align="left" class="col-md-4">
+            <table class="table">
+                <tr>
+                    <th>
+                        Restaurant Name
+                    </th>
+                    <th>
+                        Restaurant Address
+                    </th>
+
+                </tr>
+                @if (ViewBag.Favorites != null)
+                {
+                    List<Favorite> favList = new List<Favorite>();
+                    foreach (Favorite f in ViewBag.Favorites)
                     {
-                        List<Favorite> favList = new List<Favorite>();
-                        foreach (Favorite f in ViewBag.Favorites)
-                        {
 
-                            favList.Add(f);
-                        }
-                        for (int i = 0; i < favList.Count; i++)
-                        {
-
-
-
-
-
-                            <tr>
-                                <td>Row: @i</td>
-                                <td>
-                                    @favList[i].RestaurantName
-                                </td>
-                                <td>
-                                    @favList[i].PlaceID
-                                </td>
-                                <td>
-                                    <button id="@i" class="btn btn-warning" onclick="RemoveFromFavorites()">
-                                        Remove From Favorites
-                                    </button>
-                                </td>
-                            </tr>
-
-                        }
+                        favList.Add(f);
                     }
-                </table>
+                    for (int i = 0; i < favList.Count; i++)
+                    {
 
 
 
-            </div>
-        }
+
+
+                        <tr>
+                            <td>Row: @i</td>
+                            <td>
+                                @favList[i].RestaurantName
+                            </td>
+                            <td>
+                                @favList[i].PlaceID
+                            </td>
+                            <td>
+                                <button id="@i" class="btn btn-warning" onclick="RemoveFromFavorites()">
+                                    Remove From Favorites
+                                </button>
+                            </td>
+                        </tr>
+
+                    }
+                }
+            </table>
 
 
 
-        <!--Table for Data-->
-        <table id="tbl" class="table"></table>
+        </div>
+    }
+
+
+
+    <!--Table for Data-->
+    <table id="tbl" class="table-striped table-hover"></table>
 </body>
 <script language="JavaScript" type="text/javascript">
 
-    
+
     //Calls api controller to return data
     $(document).ready(function () {
 
         //Load Table Initial Data
         $.getJSON('api/GetRestaurants/detroit')
-            .done(function (data) { fillArray(data) })        
+            .done(function (data) { fillArray(data) })
 
         //Set Up Search Button/Map
         initAutocomplete();
-     
-        
+
+
     });
 
     //Uses data from api controller to fill table
@@ -345,8 +357,7 @@
     });
 
     //Search Function
-    function Tsearch()
-    {
+    function Tsearch() {
         var input = $("#search").val();
 
         //if(input != "")
@@ -358,7 +369,7 @@
 
     //Google search
     function initAutocomplete() {
-        
+
         // Create the search box and link it to the UI element.
         var input = document.getElementById('search');
         var searchBox = new google.maps.places.SearchBox(input);
