@@ -7,6 +7,7 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
 }
+{@ViewBag.Title
 <head accept="text/html">
     <title></title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -33,24 +34,29 @@
        
     <div id="map" style="align-self:center" class="md-8"></div>
     
-        
+        <br />
+<div class="btn btn-success" id="toggle_traffic">Traffic</div>
+<div class="btn btn-danger" id="toggle_transit">Transit</div>
+<div class="btn btn-primary" id="toggle_bike">Biking</div>
+
+<br />
     @if (User.Identity.IsAuthenticated)
     {
         <div class="col-md-12">
+            <h2 style="font-weight:bold; background-color:#273995; color:white" align="center">Favorites</h2>
             <table class="table" id="favoritesList"></table>
         </div>
 
     }
+    
     <div class="col-md-12">
+        <h2 align="center" style="font-weight:bold; background-color:#273995; color:white">Results</h2>
         <table id="tbl" class="table"></table>
     </div>
 
     
 
-    <div class="btn btn-success" id="toggle_traffic">Traffic</div>
-    <div class="btn btn-danger" id="toggle_transit">Transit</div>
-    <div class="btn btn-primary" id="toggle_bike">Biking</div>
-
+    
     <!---Table for Favorites-->
     
 
@@ -237,7 +243,7 @@
 
 
 
-    }
+    
 
 
 
@@ -275,6 +281,8 @@
             bikeLayer.setMap(map);
         }
     });
+
+    }
 
     //Search Function
     function Tsearch()
