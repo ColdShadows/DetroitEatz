@@ -87,48 +87,26 @@ namespace DetroitEatz.Controllers
 
             //Create List of Fake Favorites
 
-                var favorites = new List<Favorite>();
-                favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
-                favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
-                ViewBag.Favorites = favorites;
+                //var favorites = new List<Favorite>();
+                //favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
+                //favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
+                //ViewBag.Favorites = favorites;
 
-                return View(/*validRestaurants*/);
+                return View();
            
 
 
             
         }
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Index(List<Restaurant> restaurants)
-        //{
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
+         public ActionResult About()
+        {
 
-        //    foreach(Restaurant r in restaurants)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
+            return View();
+        }
+         public ActionResult ContactUs()
+         {
 
-        //    }
-
-
-        //    return View(validRestaurants);
-        //}
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddFavorite(List<Restaurant> restaurants)
-        //{
-
-        //    //db.Favorites.Add();
-
-        //    return RedirectToAction("Index");
-
-        //}
-
+             return View();
+         }
     }
 }

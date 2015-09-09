@@ -12,7 +12,6 @@ using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity;
 using Google.GData.Client;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
@@ -26,23 +25,7 @@ namespace DetroitEatz.Controllers
         
         private RestaurantContext db = new RestaurantContext();
 
-        //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
-        // {
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
-
-        //    foreach(Restaurant r in restaurants)
-        //        if(ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
-
-
-
-
-
-        //    return (validRestaurants);
-        // }
-
+       
         //Coordinate
         public struct Coordinate
         {
@@ -109,9 +92,9 @@ namespace DetroitEatz.Controllers
         }
 
         //Get
-        [Route("Home/api/GetRestaurants/{place}")]
+        [Route("Home/api/GetRestaurants/{place}/{rad}")]
         [HttpGet]
-        public IEnumerable<Restaurant> GetRestaurants(string place)
+        public IEnumerable<Restaurant> GetRestaurants(string place, double rad)
         {
             using (WebClient client = new WebClient())
             {
@@ -127,13 +110,17 @@ namespace DetroitEatz.Controllers
                 lon = coords.Longitude;
 
 
-                double radius = 250;
+                double radius = rad;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
-
+                    //"https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 uri += "key=" + TravisKey + "&";
                 uri += "location=" + lat.ToString() + "," + lon.ToString() + "&";
                 uri += "radius=" + radius.ToString() + "&";
+                //uri += "rankby=distance&";
                 uri += "types=restaurant";
+                //uri += "&keyword=food";
+                //uri += "&name=''";
+                
 
                 string detailUri = "https://maps.googleapis.com/maps/api/place/details/json?";
 
@@ -172,8 +159,8 @@ namespace DetroitEatz.Controllers
                                         WebSite = detailresults.result.website,
                                         Lat = detailresults.result.geometry.location.lat,
                                         Lon = detailresults.result.geometry.location.lng,
-                                        PriceLevel = detailresults.result.price_level.ToString(),
-                                        OpenNow = detailresults.result.opening_hours.open_now
+                                        PriceLevel = detailresults.result.price_level.ToString()
+                                        
                                     });
 
                             }
@@ -210,7 +197,11 @@ namespace DetroitEatz.Controllers
                                     AddressNumber = detailresults.result.formatted_address,
                                     PhoneNumber = detailresults.result.formatted_phone_number,
                                     Rating = detailresults.result.rating.ToString(),
-                                    WebSite = detailresults.result.website
+                                    WebSite = detailresults.result.website,
+                                    Lat = detailresults.result.geometry.location.lat,
+                                    Lon = detailresults.result.geometry.location.lng,                                                               
+                                    PriceLevel = detailresults.result.price_level.ToString()
+                                    
                                 });
 
                             }
@@ -235,22 +226,82 @@ namespace DetroitEatz.Controllers
             }
         }
 
-
+        [Route("Home/api/GetFavorites")]
+        [HttpGet]
         public IEnumerable<Favorite> getFavorites()
         {
 
-            string user = User.Identity.GetUserId();
+            string user = User.Identity.Name;
 
-
-            var favoriteslist = from f in db.Favorites
+            var favorites = from f in db.Favorites
                                 where f.UserID == user
                                 select f;
+            List<Favorite> favoritesList = new List<Favorite>();
+            favoritesList = favorites.ToList();
 
 
-
-            return favoriteslist;
+            return favoritesList;
 
         }
+
+
+        [ResponseType(typeof(Restaurant))]
+        [Route("Home/api/AddToFavorites")]
+        [HttpPost]
+        public Favorite AddToFavorites(Restaurant restaurant)
+        {
+           
+             Favorite newFav = new Favorite
+            {
+                PlaceID = restaurant.PlaceID,
+                UserID = User.Identity.Name,
+                Lat = restaurant.Lat,
+                Lon = restaurant.Lon,
+                RestaurantName = restaurant.Name,
+                Address = restaurant.AddressNumber,
+                PhoneNumber = restaurant.PhoneNumber
+
+
+            };
+
+            if(ModelState.IsValid)
+            {
+                db.Favorites.Add(newFav);
+                db.SaveChanges();
+            }
+
+
+             return newFav;
+            //return CreatedAtRoute("DefaultApi", new { id = restaurant.RestaurantID }, restaurant);
+        }
+
+
+        [ResponseType(typeof(Favorite))]
+        [Route("Home/api/RemoveFromFavorites")]
+        [HttpPost]
+        public void RemoveFromFavorites(Favorite deleteFav)
+        {
+
+
+
+            if (ModelState.IsValid)
+            {
+                var deleteQry = from f in db.Favorites
+                                where f.PlaceID == deleteFav.PlaceID && f.UserID == deleteFav.UserID
+                                select f;
+                var deleteList = deleteQry.ToList();
+
+                db.Favorites.RemoveRange(deleteList);
+                db.SaveChanges();
+            }
+
+
+
+
+        }
+
+
+
 
         //public IEnumerable<Interested> getFavorites()
         //{

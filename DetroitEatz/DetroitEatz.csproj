@@ -214,6 +214,22 @@
     <Compile Include="Migrations\201509041446255_finalstuff.Designer.cs">
       <DependentUpon>201509041446255_finalstuff.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201509061945265_current1.cs" />
+    <Compile Include="Migrations\201509061945265_current1.Designer.cs">
+      <DependentUpon>201509061945265_current1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509071726378_Favorite.cs" />
+    <Compile Include="Migrations\201509071726378_Favorite.Designer.cs">
+      <DependentUpon>201509071726378_Favorite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509081447164_favoritedetails.cs" />
+    <Compile Include="Migrations\201509081447164_favoritedetails.Designer.cs">
+      <DependentUpon>201509081447164_favoritedetails.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201509081452278_finalfavorites.cs" />
+    <Compile Include="Migrations\201509081452278_finalfavorites.Designer.cs">
+      <DependentUpon>201509081452278_finalfavorites.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\DetailResults.cs" />
@@ -240,7 +256,20 @@
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\abouto-01-01.png" />
+    <Content Include="Images\aboutw-01-01.png" />
+    <Content Include="Images\aboutw-01.png" />
+    <Content Include="Images\contacto.png" />
+    <Content Include="Images\contactw.png" />
+    <Content Include="Images\detextlogo-01.png" />
+    <Content Include="Images\detroiteatz_logo.png" />
+    <Content Include="Images\iconmap.png" />
+    <Content Include="Images\logino-01-01.png" />
+    <Content Include="Images\loginw-01-01.png" />
+    <Content Include="Images\rego-01-01.png" />
+    <Content Include="Images\regw-01-01.png" />
     <Content Include="Images\rest.png" />
+    <Content Include="Images\try3.png" />
     <Content Include="Scripts\app.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -279,7 +308,7 @@
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\ContactUs.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
     <Content Include="Views\Account\_ExternalLoginsListPartial.cshtml" />
@@ -337,6 +366,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201509041446255_finalstuff.resx">
       <DependentUpon>201509041446255_finalstuff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509061945265_current1.resx">
+      <DependentUpon>201509061945265_current1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509071726378_Favorite.resx">
+      <DependentUpon>201509071726378_Favorite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509081447164_favoritedetails.resx">
+      <DependentUpon>201509081447164_favoritedetails.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201509081452278_finalfavorites.resx">
+      <DependentUpon>201509081452278_finalfavorites.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
