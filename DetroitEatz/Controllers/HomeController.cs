@@ -20,7 +20,6 @@ namespace DetroitEatz.Controllers
            
             
             //Create new Favorite
-<<<<<<< HEAD
                 //Favorite newFav = new Favorite
                 //{
 
@@ -33,20 +32,6 @@ namespace DetroitEatz.Controllers
                 //db2.Favorites.Add(newFav);
                 //    //Save those changes from private DB to main DB
                 //db2.SaveChanges();
-=======
-                Favorite newFav = new Favorite
-                {
-
-                    UserID = User.Identity.GetUserName(),
-                    PlaceID = "k",
-                    RestaurantName = "k"
-
-                };
-                    //Add That value to private DB
-               // db2.Favorites.Add(newFav);
-                    //Save those changes from private DB to main DB
-                db2.SaveChanges();
->>>>>>> Current-Uma
             
                         
             //Getting User Information
@@ -102,48 +87,26 @@ namespace DetroitEatz.Controllers
 
             //Create List of Fake Favorites
 
-                var favorites = new List<Favorite>();
-                favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
-                favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
-                ViewBag.Favorites = favorites;
+                //var favorites = new List<Favorite>();
+                //favorites.Add(new Favorite { PlaceID = "fav1", RestaurantName = "Restaurant 1", UserID = User.Identity.GetUserId() });
+                //favorites.Add(new Favorite { PlaceID = "fav2", RestaurantName = "Restaurant 2", UserID = User.Identity.GetUserId() });
+                //ViewBag.Favorites = favorites;
 
-                return View(/*validRestaurants*/);
+                return View();
            
 
 
             
         }
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Index(List<Restaurant> restaurants)
-        //{
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
+         public ActionResult About()
+        {
 
-        //    foreach(Restaurant r in restaurants)
-        //    {
-        //        if (ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
+            return View();
+        }
+         public ActionResult ContactUs()
+         {
 
-        //    }
-
-
-        //    return View(validRestaurants);
-        //}
-
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AddFavorite(List<Restaurant> restaurants)
-        //{
-
-        //    //db.Favorites.Add();
-
-        //    return RedirectToAction("Index");
-
-        //}
-
+             return View();
+         }
     }
 }

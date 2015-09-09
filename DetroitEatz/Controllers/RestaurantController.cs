@@ -12,7 +12,6 @@ using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using System.Web.Http.Description;
 using Microsoft.AspNet.Identity;
-using System.Data.Entity;
 using Google.GData.Client;
 using Newtonsoft.Json;
 using System.Web.Script.Serialization;
@@ -26,23 +25,7 @@ namespace DetroitEatz.Controllers
         
         private RestaurantContext db = new RestaurantContext();
 
-        //public async Task<IHttpActionResult> getRestaurants(List<Restaurant> restaurants)
-        // {
-        //    List<Restaurant> validRestaurants = new List<Restaurant>();
-
-        //    foreach(Restaurant r in restaurants)
-        //        if(ModelState.IsValid)
-        //        {
-        //            validRestaurants.Add(r);
-        //        }
-
-
-
-
-
-        //    return (validRestaurants);
-        // }
-
+       
         //Coordinate
         public struct Coordinate
         {
@@ -109,9 +92,9 @@ namespace DetroitEatz.Controllers
         }
 
         //Get
-        [Route("Home/api/GetRestaurants/{place}")]
+        [Route("Home/api/GetRestaurants/{place}/{rad}")]
         [HttpGet]
-        public IEnumerable<Restaurant> GetRestaurants(string place)
+        public IEnumerable<Restaurant> GetRestaurants(string place, double rad)
         {
             using (WebClient client = new WebClient())
             {
@@ -127,7 +110,7 @@ namespace DetroitEatz.Controllers
                 lon = coords.Longitude;
 
 
-                double radius = 250;
+                double radius = rad;
                 string uri = "https://maps.googleapis.com/maps/api/place/radarsearch/json?";
                     //"https://maps.googleapis.com/maps/api/place/nearbysearch/json?";
                 uri += "key=" + TravisKey + "&";
@@ -243,22 +226,82 @@ namespace DetroitEatz.Controllers
             }
         }
 
-
+        [Route("Home/api/GetFavorites")]
+        [HttpGet]
         public IEnumerable<Favorite> getFavorites()
         {
 
-            string user = User.Identity.GetUserId();
+            string user = User.Identity.Name;
 
-
-            var favoriteslist = from f in db.Favorites
+            var favorites = from f in db.Favorites
                                 where f.UserID == user
                                 select f;
+            List<Favorite> favoritesList = new List<Favorite>();
+            favoritesList = favorites.ToList();
 
 
-
-            return favoriteslist;
+            return favoritesList;
 
         }
+
+
+        [ResponseType(typeof(Restaurant))]
+        [Route("Home/api/AddToFavorites")]
+        [HttpPost]
+        public Favorite AddToFavorites(Restaurant restaurant)
+        {
+           
+             Favorite newFav = new Favorite
+            {
+                PlaceID = restaurant.PlaceID,
+                UserID = User.Identity.Name,
+                Lat = restaurant.Lat,
+                Lon = restaurant.Lon,
+                RestaurantName = restaurant.Name,
+                Address = restaurant.AddressNumber,
+                PhoneNumber = restaurant.PhoneNumber
+
+
+            };
+
+            if(ModelState.IsValid)
+            {
+                db.Favorites.Add(newFav);
+                db.SaveChanges();
+            }
+
+
+             return newFav;
+            //return CreatedAtRoute("DefaultApi", new { id = restaurant.RestaurantID }, restaurant);
+        }
+
+
+        [ResponseType(typeof(Favorite))]
+        [Route("Home/api/RemoveFromFavorites")]
+        [HttpPost]
+        public void RemoveFromFavorites(Favorite deleteFav)
+        {
+
+
+
+            if (ModelState.IsValid)
+            {
+                var deleteQry = from f in db.Favorites
+                                where f.PlaceID == deleteFav.PlaceID && f.UserID == deleteFav.UserID
+                                select f;
+                var deleteList = deleteQry.ToList();
+
+                db.Favorites.RemoveRange(deleteList);
+                db.SaveChanges();
+            }
+
+
+
+
+        }
+
+
+
 
         //public IEnumerable<Interested> getFavorites()
         //{
