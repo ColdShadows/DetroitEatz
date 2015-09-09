@@ -209,6 +209,75 @@
             '</tr>'
 
         while (k < data.length) {
+
+    
+
+                if (data[k].PhoneNumber != null) {
+                    phone = data[k].PhoneNumber;
+                }
+                else {
+                    phone = 'Not Listed';
+                }
+
+                if (data[k].WebSite != null) {
+                    website = '<a href="' + data[k].WebSite + '">' + data[k].WebSite;
+                }
+                else {
+                    website = 'Website not available';
+                }
+
+                if (data[k].PriceLevel == 0) {
+                    priceLevel = 'N/A';
+                }
+                else if (data[k].PriceLevel == 1) {
+                    priceLevel = 'Inexpensive';
+                }
+                else if (data[k].PriceLevel == 2) {
+                    priceLevel = 'Moderate';
+                }
+                else if (data[k].PriceLevel == 3) {
+                    priceLevel = 'Expensive';
+                }
+                else {
+                    priceLevel = 'Very Expensive';
+                }
+
+                if (data[k].Rating == 0) {
+                    starImage = 'No Rating'
+                }
+                else if (data[k].Rating > 0 && data[k].Rating <= 0.5) {
+                    starImage = "<img src='../Images/halfstar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 0.5 && data[k].Rating <= 1.25) {
+                    starImage = "<img src='../Images/onestar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 1.25 && data[k].Rating <= 1.75) {
+                    starImage = "<img src='../Images/oneandhalfstar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 1.75 && data[k].Rating <= 2.25) {
+                    starImage = "<img src='../Images/twostar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 2.25 && data[k].Rating <= 2.75) {
+                    starImage = "<img src='../Images/twoandhalfstar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 2.75 && data[k].Rating <= 3.25) {
+                    starImage = "<img src='../Images/threestar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 3.25 && data[k].Rating <= 3.75) {
+                    starImage = "<img src='../Images/threeandhalfstar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 3.75 && data[k].Rating <= 4.25) {
+                    starImage = "<img src='../Images/fourstar.png' height='14' width='74'>";
+                }
+                else if (data[k].Rating > 3.75 && data[k].Rating <= 4.75) {
+                    starImage = "<img src='../Images/fourandhalfstar.png' height='14' width='74'>";
+                }
+                else {
+                    starImage = "<img src='../Images/fivestar.png' height='14' width='74'>";
+                }
+
+
+
             var isAuthenticated = @User.Identity.IsAuthenticated.ToString().ToLower();
             document.getElementById("tbl").innerHTML +=
             '<tr id="' + k +'row">'
@@ -216,10 +285,14 @@
             + '<td id="' + k + 'id" style="display:none">' + data[k].PlaceID + '</td>'
             + '<td id="' + k + 'n">' + data[k].Name + '</td>'
             + '<td id="' + k + 'a">' + data[k].AddressNumber + '</td>'
-            + '<td id="' + k + 'pn">' + data[k].PhoneNumber + '</td>'
-            + '<td id="' + k + 'pl">' + data[k].PriceLevel + '</td>'
-            + '<td id="' + k + 'r">' + data[k].Rating + '</td>'
-            + '<td id="' + k + 'w">' + '<a href="' + data[k].WebSite + '">' + data[k].WebSite + '</td>'
+            + '<td id="' + k + 'pn">' + phone + '</td>'
+            + '<td id="' + k + 'pl">' + priceLevel + '</td>'
+            + '<td id="' + k + 'r">' + starImage + '</td>'
+            + '<td id="' + k + 'w">' + website + '</td>'
+
+            
+
+
             //checkFavorites(k, function(data)
             //{
                 if(isAuthenticated){
